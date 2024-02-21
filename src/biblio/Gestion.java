@@ -121,6 +121,5 @@ public class Gestion {
             rep = sc.nextLine();
 
         } while (rep.equals("o"));
-        System.out.println("bbbbb");
     }
 }
