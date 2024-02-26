@@ -3,6 +3,7 @@ package biblio.metier;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Lecteur {
     private static int numact=1;
@@ -13,7 +14,7 @@ public class Lecteur {
     private String mail;
     private String tel;
 
-    private List<biblio.metier.Location> listLocation = new ArrayList<>();
+    private List<Location> listLocation = new ArrayList<>();
 
     public Lecteur() {
     }
@@ -84,12 +85,25 @@ public class Lecteur {
         this.tel = tel;
     }
 
-    public List<biblio.metier.Location> getListLocation() {
+    public List<Location> getListLocation() {
         return listLocation;
     }
 
     public void setLloc(List<Location> listLocation) {
         this.listLocation = listLocation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Lecteur lecteur = (Lecteur) o;
+        return numlecteur == lecteur.numlecteur;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numlecteur);
     }
 
     @Override

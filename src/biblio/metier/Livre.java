@@ -1,25 +1,26 @@
 package biblio.metier;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Livre extends Ouvrage {
     private String isbn;
     private int nbrePages;
-    private biblio.metier.TypeLivre tl;
+    private TypeLivre tl;
     private String resume;
 
 
     public Livre() {
     }
 
-    public Livre(String isbn, int nbrePages, biblio.metier.TypeLivre tl, String resume) {
+    public Livre(String isbn, int nbrePages, TypeLivre tl, String resume) {
         this.isbn = isbn;
         this.nbrePages = nbrePages;
         this.tl = tl;
         this.resume = resume;
     }
 
-    public Livre(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre, String isbn, int nbrePages, biblio.metier.TypeLivre tl, String resume) {
+    public Livre(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre, String isbn, int nbrePages, TypeLivre tl, String resume) {
         super(titre, ageMin, dateParution, to, prixLocation, langue, genre);
         this.isbn = isbn;
         this.nbrePages = nbrePages;
@@ -43,7 +44,7 @@ public class Livre extends Ouvrage {
         this.nbrePages = nbrePages;
     }
 
-    public biblio.metier.TypeLivre getTl() {
+    public TypeLivre getTl() {
         return tl;
     }
 
@@ -57,6 +58,19 @@ public class Livre extends Ouvrage {
 
     public void setResume(String resume) {
         this.resume = resume;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Livre livre = (Livre) o;
+        return Objects.equals(isbn, livre.isbn);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isbn);
     }
 
     @Override

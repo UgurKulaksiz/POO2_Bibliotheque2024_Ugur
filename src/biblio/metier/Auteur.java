@@ -2,13 +2,14 @@ package biblio.metier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Auteur {
     private String nom;
     private String prenom;
     private String nationalite;
 
-    private List<biblio.metier.Ouvrage> listOuvrage = new ArrayList<>();
+    private List<Ouvrage> listOuvrage = new ArrayList<>();
 
     public Auteur() {
     }
@@ -19,7 +20,7 @@ public class Auteur {
         this.nationalite = nationalite;
     }
 
-    public Auteur(String nom, String prenom, String nationalite, List<biblio.metier.Ouvrage> listOuvrage) {
+    public Auteur(String nom, String prenom, String nationalite, List<Ouvrage> listOuvrage) {
         this.nom = nom;
         this.prenom = prenom;
         this.nationalite = nationalite;
@@ -50,12 +51,25 @@ public class Auteur {
         this.nationalite = nationalite;
     }
 
-    public List<biblio.metier.Ouvrage> getListOuvrage() {
+    public List<Ouvrage> getListOuvrage() {
         return listOuvrage;
     }
 
     public void setListOuvrage(List<Ouvrage> listOuvrage) {
         this.listOuvrage = listOuvrage;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Auteur auteur = (Auteur) o;
+        return Objects.equals(nom, auteur.nom) && Objects.equals(prenom, auteur.prenom) && Objects.equals(nationalite, auteur.nationalite);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nom, prenom, nationalite);
     }
 
     @Override

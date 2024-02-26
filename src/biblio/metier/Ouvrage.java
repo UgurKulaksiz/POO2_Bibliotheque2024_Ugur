@@ -8,7 +8,7 @@ public abstract class Ouvrage {
     protected String titre;
     protected int ageMin;
     protected LocalDate dateParution;
-    protected biblio.metier.TypeOuvrage to;
+    protected TypeOuvrage to;
     protected double prixLocation;
     protected String langue;
     protected String genre;
@@ -21,7 +21,7 @@ public abstract class Ouvrage {
     public Ouvrage() {
     }
 
-    public Ouvrage(String titre, int ageMin, LocalDate dateParution, biblio.metier.TypeOuvrage to, double prixLocation, String langue, String genre) {
+    public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre) {
         this.titre = titre;
         this.ageMin = ageMin;
         this.dateParution = dateParution;
@@ -31,7 +31,7 @@ public abstract class Ouvrage {
         this.genre = genre;
     }
 
-    public Ouvrage(String titre, int ageMin, LocalDate dateParution, biblio.metier.TypeOuvrage to, double prixLocation, String langue, String genre, List<biblio.metier.Auteur> listAuteur, List<biblio.metier.Exemplaire> listExemplaire) {
+    public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre, List<Auteur> listAuteur, List<Exemplaire> listExemplaire) {
         this.titre = titre;
         this.ageMin = ageMin;
         this.dateParution = dateParution;
@@ -67,7 +67,7 @@ public abstract class Ouvrage {
         this.dateParution = dateParution;
     }
 
-    public biblio.metier.TypeOuvrage getTo() {
+    public TypeOuvrage getTo() {
         return to;
     }
 
@@ -99,7 +99,7 @@ public abstract class Ouvrage {
         this.genre = genre;
     }
 
-    public List<biblio.metier.Auteur> getListAuteur() {
+    public List<Auteur> getListAuteur() {
         return listAuteur;
     }
 
@@ -107,7 +107,7 @@ public abstract class Ouvrage {
         this.listAuteur = listAuteur;
     }
 
-    public List<biblio.metier.Exemplaire> getListExemplaire() {
+    public List<Exemplaire> getListExemplaire() {
         return listExemplaire;
     }
 

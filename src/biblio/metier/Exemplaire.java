@@ -2,15 +2,16 @@ package biblio.metier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Exemplaire {
     private String matricule;
     private String descriptionEtat;
 
-    private biblio.metier.Ouvrage ouvrage;
-    private biblio.metier.Rayon rayon;
+    private Ouvrage ouvrage;
+    private Rayon rayon;
 
-    private List<biblio.metier.Location> listLocation = new ArrayList<>();
+    private List<Location> listLocation = new ArrayList<>();
 
     public Exemplaire() {
     }
@@ -20,7 +21,7 @@ public class Exemplaire {
         this.descriptionEtat = descriptionEtat;
     }
 
-    public Exemplaire(String matricule, String descriptionEtat, biblio.metier.Ouvrage ouvrage) {
+    public Exemplaire(String matricule, String descriptionEtat, Ouvrage ouvrage) {
         this.matricule = matricule;
         this.descriptionEtat=descriptionEtat;
         this.ouvrage = ouvrage;
@@ -43,7 +44,7 @@ public class Exemplaire {
         this.descriptionEtat = descriptionEtat;
     }
 
-    public biblio.metier.Ouvrage getOuvrage() {
+    public Ouvrage getOuvrage() {
         return ouvrage;
     }
 
@@ -51,20 +52,35 @@ public class Exemplaire {
         this.ouvrage = ouvrage;
     }
 
-    public biblio.metier.Rayon getRayon() {
+    public Rayon getRayon() {
         return rayon;
     }
 
     public void setRayon(Rayon rayon) {
-        this.rayon = rayon;
+        if(this.rayon!=null) this.rayon.getListExemplaire().remove(this);
+        this.rayon=rayon;
+        this.rayon.getListExemplaire().add(this);
     }
 
-    public List<biblio.metier.Location> getListLocation() {
+    public List<Location> getListLocation() {
         return listLocation;
     }
 
     public void setListLocation(List<Location> listLocation) {
         this.listLocation = listLocation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Exemplaire that = (Exemplaire) o;
+        return Objects.equals(matricule, that.matricule);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(matricule);
     }
 
     @Override

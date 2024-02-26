@@ -2,11 +2,12 @@ package biblio.metier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Rayon {
     private String codeRayon;
     private String genre;
-    private List<biblio.metier.Exemplaire> listExemplaire = new ArrayList<>();
+    private List<Exemplaire> listExemplaire = new ArrayList<>();
 
     public Rayon() {
     }
@@ -32,12 +33,25 @@ public class Rayon {
         this.genre = genre;
     }
 
-    public List<biblio.metier.Exemplaire> getListExemplaire() {
+    public List<Exemplaire> getListExemplaire() {
         return listExemplaire;
     }
 
     public void setListExemplaire(List<Exemplaire> listExemplaire) {
         this.listExemplaire = listExemplaire;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rayon rayon = (Rayon) o;
+        return Objects.equals(codeRayon, rayon.codeRayon);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codeRayon);
     }
 
     @Override

@@ -1,8 +1,9 @@
 package biblio;
 
-import biblio.metier.TypeLivre;
+import biblio.metier.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,21 +12,21 @@ import static biblio.metier.TypeOuvrage.LIVRE;
 
 public class Gestion {
     Scanner sc = new Scanner(System.in);
-    List<biblio.metier.Auteur> listAuteur = new ArrayList<>();
+    List<Auteur> listAuteur = new ArrayList<>();
 
     public static void main(String[] args) {
-        biblio.metier.Auteur a = new biblio.metier.Auteur("Verne", "Jules", "France");
-        biblio.metier.Livre l = new biblio.metier.Livre("Vingt mille lieues sous les mers", 10, LocalDate.of(1880, 1, 1), LIVRE, 1.50, "français", "aventure", "a125", 350, TypeLivre.ROMAN, "histoire de sous-marin");
+        Auteur a = new Auteur("Verne", "Jules", "France");
+        Livre l = new Livre("Vingt mille lieues sous les mers", 10, LocalDate.of(1880, 1, 1), LIVRE, 1.50, "français", "aventure", "a125", 350, TypeLivre.ROMAN, "histoire de sous-marin");
         a.getListOuvrage().add(l);
         l.getListAuteur().add(a);
 
-        biblio.metier.Rayon r = new biblio.metier.Rayon("r12", "aventure");
-        biblio.metier.Exemplaire e = new biblio.metier.Exemplaire("m12", "état neuf", l);
+        Rayon r = new Rayon("r12", "aventure");
+        Exemplaire e = new Exemplaire("m12", "état neuf", l);
         e.setRayon(r);
         r.getListExemplaire().add(e);
 
-        biblio.metier.Lecteur lec = new biblio.metier.Lecteur("Dupont", "Jean", LocalDate.of(2000, 1, 4), "Mons", "jean.dupont@mail.com", "0458774411");
-        biblio.metier.Location loc = new biblio.metier.Location(LocalDate.of(2023, 2, 1), LocalDate.of(2023, 3, 1), lec, e);
+        Lecteur lec = new Lecteur("Dupont", "Jean", LocalDate.of(2000, 1, 4), "Mons", "jean.dupont@mail.com", "0458774411");
+        Location loc = new Location(LocalDate.of(2023, 2, 1), LocalDate.of(2023, 3, 1), lec, e);
         lec.getListLocation().add(loc);
         e.getListLocation().add(loc);
 
@@ -74,6 +75,7 @@ public class Gestion {
                     ajoutAuteur();
                     break;
                 case 2:
+                    ajoutOuvrage();
                     break;
                 case 3:
                     break;
@@ -108,8 +110,8 @@ public class Gestion {
             System.out.println("Nationalité : ");
             String nationalite = sc.nextLine();
 
-            biblio.metier.Auteur a = new biblio.metier.Auteur(nom, prenom, nationalite);
-            List<biblio.metier.Auteur> listAuteur = new ArrayList<>();
+            Auteur a = new Auteur(nom, prenom, nationalite);
+            List<Auteur> listAuteur = new ArrayList<>();
             listAuteur.add(a);
 
             System.out.println("Auteur " + cpt_auteur + " créé ");
@@ -121,5 +123,90 @@ public class Gestion {
             rep = sc.nextLine();
 
         } while (rep.equals("o"));
+    }
+
+    public void ajoutOuvrage() {
+        System.out.println("Choix du type d'ouvrage : ");
+        for (TypeOuvrage to : TypeOuvrage.values()) {
+            System.out.println(to.ordinal() + ". " + to.name());
+        }
+        int choixTo = sc.nextInt();
+        sc.nextLine();
+
+        if (choixTo < 1 || choixTo > TypeOuvrage.values().length) {
+            System.out.println("Choix invalide");
+            return;
+        }
+
+        TypeOuvrage toChoisi = TypeOuvrage.values()[choixTo - 1];
+        System.out.println("Ouvrage choisi : " + toChoisi.name());
+
+        if (toChoisi.name().equals(LIVRE)) {
+            System.out.println("ISBN : ");
+            String isbn = sc.nextLine();
+            System.out.println("Nombre de pages : ");
+            int nbrePages = sc.nextInt();
+            sc.nextLine();
+
+            System.out.println("Type du livre : ");
+            for (TypeLivre tl : TypeLivre.values()) {
+                System.out.println(tl.ordinal() + ". " + tl.name());
+            }
+            TypeLivre tlChoisi = TypeLivre.values()[sc.nextInt() - 1];
+            System.out.println("Résumé : ");
+            String resume = sc.nextLine();
+
+            Livre l = new Livre(isbn, nbrePages, tlChoisi, resume);
+            listAuteur.forEach(auteur -> auteur.getListOuvrage().add(l));
+        } else if (toChoisi.name().equals(TypeOuvrage.CD)) {
+            System.out.println("Code : ");
+            long code = sc.nextLong();
+            sc.nextLine();
+            System.out.println("Nombre de pages : ");
+            byte nbrePages = sc.nextByte();
+            sc.nextLine();
+            System.out.println("Durée totale : ");
+            String dureeTotale = sc.nextLine();
+
+            CD c = new CD(code, nbrePages, dureeTotale);
+            listAuteur.forEach(auteur -> auteur.getListOuvrage().add(c));
+        } else if (toChoisi.name().equals(TypeOuvrage.DVD)) {
+            System.out.println("Code : ");
+            long code = sc.nextLong();
+            sc.nextLine();
+            System.out.println("Durée totale : ");
+            LocalTime dureeTotale = LocalTime.parse(sc.nextLine());
+            System.out.println("Nombre bonus : ");
+            byte nbreBonus = sc.nextByte();
+
+            DVD d = new DVD(code, dureeTotale, nbreBonus);
+            listAuteur.forEach(auteur -> auteur.getListOuvrage().add(d));
+        } else {
+            System.out.println("Type d'ouvrage non trouvé ");
+            return;
+        }
+
+        if (listAuteur.isEmpty()) {
+            System.out.println("Aucun auteur disponible. Veuillez d'abord ajouter un auteur.");
+            return;
+        }
+
+        System.out.println("Liste des auteurs disponibles : ");
+        for (int i = 0; i < listAuteur.size(); i++) {
+            Auteur auteur = listAuteur.get(i);
+            System.out.println((i + 1) + ". " + auteur.getNom() + " " + auteur.getPrenom());
+        }
+
+        System.out.println("Choisissez l'auteur de l'ouvrage : ");
+        int choixAuteur = sc.nextInt();
+        sc.nextLine();
+
+        if (choixAuteur < 1 || choixAuteur > listAuteur.size()) {
+            System.out.println("Choix invalide");
+            return;
+        }
+
+        Auteur auteurChoisi = listAuteur.get(choixAuteur - 1);
+        System.out.println("L'auteur " + auteurChoisi.getNom() + " " + auteurChoisi.getPrenom() + " a été ajouté à l'ouvrage.");
     }
 }

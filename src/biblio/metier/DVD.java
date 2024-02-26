@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DVD extends Ouvrage {
     private long code;
@@ -76,6 +77,19 @@ public class DVD extends Ouvrage {
 
     public void setSousTitres(List<String> sousTitres) {
         this.sousTitres = sousTitres;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DVD dvd = (DVD) o;
+        return code == dvd.code;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code);
     }
 
     @Override

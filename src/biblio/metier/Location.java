@@ -1,21 +1,22 @@
 package biblio.metier;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Location {
     private LocalDate dateLocation;
     private LocalDate dateRestitution;
-    private biblio.metier.Lecteur loueur;
-    private biblio.metier.Exemplaire exemplaire;
+    private Lecteur loueur;
+    private Exemplaire exemplaire;
 
-    public Location(LocalDate dateLocation, LocalDate dateRestitution, biblio.metier.Lecteur loueur, biblio.metier.Exemplaire exemplaire) {
+    public Location(LocalDate dateLocation, LocalDate dateRestitution, Lecteur loueur, Exemplaire exemplaire) {
         this.dateLocation = dateLocation;
         this.dateRestitution = dateRestitution;
         this.loueur = loueur;
         this.exemplaire = exemplaire;
     }
 
-    public Location(biblio.metier.Lecteur loueur, biblio.metier.Exemplaire exemplaire) {
+    public Location(Lecteur loueur, Exemplaire exemplaire) {
         this.loueur = loueur;
         this.exemplaire = exemplaire;
     }
@@ -36,7 +37,7 @@ public class Location {
         this.dateRestitution = dateRestitution;
     }
 
-    public biblio.metier.Lecteur getLoueur() {
+    public Lecteur getLoueur() {
         return loueur;
     }
 
@@ -44,12 +45,25 @@ public class Location {
         this.loueur = loueur;
     }
 
-    public biblio.metier.Exemplaire getExemplaire() {
+    public Exemplaire getExemplaire() {
         return exemplaire;
     }
 
     public void setExemplaire(Exemplaire exemplaire) {
         this.exemplaire = exemplaire;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Location location = (Location) o;
+        return Objects.equals(dateLocation, location.dateLocation) && Objects.equals(loueur, location.loueur) && Objects.equals(exemplaire, location.exemplaire);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dateLocation, loueur, exemplaire);
     }
 
     @Override
