@@ -13,6 +13,8 @@ import static biblio.metier.TypeOuvrage.LIVRE;
 public class Gestion {
     Scanner sc = new Scanner(System.in);
     List<Auteur> listAuteur = new ArrayList<>();
+    List<Lecteur> listLecteur = new ArrayList<>();
+    List<Rayon> listRayon = new ArrayList<>();
 
     public static void main(String[] args) {
         Auteur a = new Auteur("Verne", "Jules", "France");
@@ -78,8 +80,10 @@ public class Gestion {
                     ajoutOuvrage();
                     break;
                 case 3:
+                    ajoutLecteur();
                     break;
                 case 4:
+                    ajoutRayon();
                     break;
                 case 5:
                     break;
@@ -208,5 +212,35 @@ public class Gestion {
 
         Auteur auteurChoisi = listAuteur.get(choixAuteur - 1);
         System.out.println("L'auteur " + auteurChoisi.getNom() + " " + auteurChoisi.getPrenom() + " a été ajouté à l'ouvrage.");
+    }
+
+    public void ajoutLecteur(){
+        System.out.println("Nom du lecteur : ");
+        String nom = sc.nextLine();
+        System.out.println("Prénom : ");
+        String prenom = sc.nextLine();
+        System.out.println("Date de naissance (DD/MM/YYYY) : ");
+        LocalDate dn = LocalDate.parse(sc.nextLine());
+        System.out.println("Adresse : ");
+        String adresse = sc.nextLine();
+        System.out.println("E-mail : ");
+        String mail = sc.nextLine();
+        System.out.println("Numéro de téléphone : ");
+        String tel = sc.nextLine();
+
+        Lecteur lec = new Lecteur(nom, prenom, dn, adresse, mail, tel);
+        listLecteur.add(lec);
+        System.out.println("Lecteur créé");
+    }
+
+    public void ajoutRayon(){
+        System.out.println("Code du rayon");
+        String codeRayon = sc.nextLine();
+        System.out.println("Genre : ");
+        String genre = sc.nextLine();
+
+        Rayon r = new Rayon(codeRayon, genre);
+        listRayon.add(r);
+        System.out.println("Rayon créé");
     }
 }
