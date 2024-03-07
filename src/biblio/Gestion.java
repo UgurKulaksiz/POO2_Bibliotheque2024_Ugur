@@ -86,6 +86,7 @@ public class Gestion {
                     ajoutRayon();
                     break;
                 case 5:
+                    ajoutExemplaire();
                     break;
                 case 6:
                     break;
@@ -214,7 +215,7 @@ public class Gestion {
         System.out.println("L'auteur " + auteurChoisi.getNom() + " " + auteurChoisi.getPrenom() + " a été ajouté à l'ouvrage.");
     }
 
-    public void ajoutLecteur(){
+    public void ajoutLecteur() {
         System.out.println("Nom du lecteur : ");
         String nom = sc.nextLine();
         System.out.println("Prénom : ");
@@ -233,7 +234,7 @@ public class Gestion {
         System.out.println("Lecteur créé");
     }
 
-    public void ajoutRayon(){
+    public void ajoutRayon() {
         System.out.println("Code du rayon");
         String codeRayon = sc.nextLine();
         System.out.println("Genre : ");
@@ -242,5 +243,72 @@ public class Gestion {
         Rayon r = new Rayon(codeRayon, genre);
         listRayon.add(r);
         System.out.println("Rayon créé");
+    }
+
+    public void ajoutExemplaire() {
+        System.out.println("Liste des ouvrages ");
+        for (int i = 0; i < listAuteur.size(); i++) {
+            Auteur a = listAuteur.get(i);
+
+            for (Ouvrage o : a.getListOuvrage()) {
+                System.out.println(i + 1 + ". " + o.getTitre());
+            }
+        }
+
+        System.out.println("Choix d'un ouvrage : ");
+        int choixOuvrage = sc.nextInt();
+        sc.nextLine();
+
+        if (choixOuvrage < 1 || choixOuvrage > listAuteur.size()) {
+            System.out.println("Choix invalide");
+            return;
+        }
+
+        Ouvrage ouvrageChoisi = null;
+        int cpt;
+
+        cpt = 0;
+        for (Auteur a : listAuteur) {
+            for (Ouvrage o : a.getListOuvrage()) {
+                cpt++;
+                if (cpt == choixOuvrage) {
+                    ouvrageChoisi = o;
+                }
+            }
+
+            if (ouvrageChoisi != null) break;
+        }
+
+        System.out.println("Liste des rayons ");
+        for (int i = 0; i < listRayon.size(); i++) {
+            Rayon r = listRayon.get(i);
+
+            System.out.println(i + 1 + ". " + r.getCodeRayon() + " - " + r.getGenre());
+        }
+
+        System.out.println("Choix d'un rayon ");
+        int choixRayon = sc.nextInt();
+        sc.nextLine();
+
+        if (choixRayon < 1 || choixRayon > listRayon.size()) {
+            System.out.println("Choix invalide");
+            return;
+        }
+
+        Rayon rayonChoisi = listRayon.get(choixRayon - 1);
+
+        System.out.println("Encodage de l'exemplaire");
+        System.out.println("Matricule : ");
+        String matricule = sc.nextLine();
+        System.out.println("Description : ");
+        String description = sc.nextLine();
+
+        Exemplaire e = new Exemplaire(matricule, description, ouvrageChoisi);
+        e.setRayon(rayonChoisi);
+
+        /* Ajouter à la liste des exemplaires de l'ouvrage */
+        ouvrageChoisi.getListExemplaire().add(e);
+
+        System.out.println("Exemplaire de l'ouvrage a été ajouté avec succés");
     }
 }
