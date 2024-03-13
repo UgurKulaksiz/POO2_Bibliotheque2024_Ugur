@@ -16,11 +16,6 @@ public class Exemplaire {
     public Exemplaire() {
     }
 
-    public Exemplaire(String matricule, String descriptionEtat) {
-        this.matricule = matricule;
-        this.descriptionEtat = descriptionEtat;
-    }
-
     public Exemplaire(String matricule, String descriptionEtat, Ouvrage ouvrage) {
         this.matricule = matricule;
         this.descriptionEtat=descriptionEtat;
@@ -94,6 +89,40 @@ public class Exemplaire {
     }
 
     /* METHODES */
+    public void modifierEtatExemplaire(String etat){
+        //TODO modifier etat exemplaire
+    }
 
+    public Lecteur lecteurActuelExemplaire(){
+        //TODO lecteur actuel exemplaire
+        return null;
+    }
+    public List<Lecteur> lecteursExemplaire(){
+        //lecteurs exemplaire
+        return null;
+    }
+
+    public void envoiMailLecteurActuelExemplaire(Mail mail){
+        //TODO envoi mail lecteur exemplaire
+    }
+    public void envoiMailLecteursExemplaire(Mail mail){
+        //TODO envoi mail lecteurs exemplaire
+    }
+
+    public boolean enRetard(){
+        //TODO enretard exeplaire
+        return false;
+    }
+
+    public int joursRetard(){
+        //TODO jours retard exemplaire
+        return 0;
+    }
+
+
+    public boolean enLocation(){
+        //TODO en location exemplaires
+        return false;
+    }
 
 }

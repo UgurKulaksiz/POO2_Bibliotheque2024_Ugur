@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static biblio.metier.TypeOuvrage.DVD;
+
 public class DVD extends Ouvrage {
     private long code;
-    private LocalTime dureeTotale;
+    private String dureeTotale;
     private byte nbreBonus;
     private List<String> autresLangues = new ArrayList<>();
     private List<String> sousTitres = new ArrayList<>();
@@ -16,27 +18,11 @@ public class DVD extends Ouvrage {
     public DVD() {
     }
 
-    public DVD(long code, LocalTime dureeTotale, byte nbreBonus) {
-        this.code = code;
-        this.dureeTotale = dureeTotale;
-        this.nbreBonus = nbreBonus;
-    }
-
-    public DVD(long code, LocalTime dureeTotale, byte nbreBonus, List<String> autresLangues, List<String> sousTitres) {
-        this.code = code;
-        this.dureeTotale = dureeTotale;
-        this.nbreBonus = nbreBonus;
-        this.autresLangues = autresLangues;
-        this.sousTitres = sousTitres;
-    }
-
-    public DVD(String titre, byte ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre, long code, LocalTime dureeTotale, byte nbreBonus, List<String> autresLangues, List<String> sousTitres) {
-        super(titre, ageMin, dateParution, to, prixLocation, langue, genre);
-        this.code = code;
-        this.dureeTotale = dureeTotale;
-        this.nbreBonus = nbreBonus;
-        this.autresLangues = autresLangues;
-        this.sousTitres = sousTitres;
+    public DVD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, String dureeTotale, byte nbreBonus) {
+        super(titre, ageMin, dateParution, DVD, prixLocation, langue, genre);
+        this.code=code;
+        this.dureeTotale=dureeTotale;
+        this.nbreBonus=nbreBonus;
     }
 
     public long getCode() {
@@ -47,11 +33,11 @@ public class DVD extends Ouvrage {
         this.code = code;
     }
 
-    public LocalTime getDureeTotale() {
+    public String getDureeTotale() {
         return dureeTotale;
     }
 
-    public void setDureeTotale(LocalTime dureeTotale) {
+    public void setDureeTotale(String dureeTotale) {
         this.dureeTotale = dureeTotale;
     }
 
@@ -104,5 +90,10 @@ public class DVD extends Ouvrage {
     }
 
     /* METHODES */
+    @Override
+    public double amendeRetard(int njours) {
+        //TODO amendeRetard DVD
+        return 0;
+    }
 
 }

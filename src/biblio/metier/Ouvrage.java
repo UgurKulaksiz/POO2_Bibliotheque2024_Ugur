@@ -14,9 +14,9 @@ public abstract class Ouvrage {
     protected String genre;
 
 
-    protected List<biblio.metier.Auteur> listAuteur = new ArrayList<>();
+    protected List<Auteur> listAuteur = new ArrayList<>();
 
-    protected List<biblio.metier.Exemplaire> listExemplaire = new ArrayList<>();
+    protected List<Exemplaire> listExemplaire = new ArrayList<>();
 
     public Ouvrage() {
     }
@@ -29,18 +29,6 @@ public abstract class Ouvrage {
         this.prixLocation = prixLocation;
         this.langue = langue;
         this.genre = genre;
-    }
-
-    public Ouvrage(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre, List<Auteur> listAuteur, List<Exemplaire> listExemplaire) {
-        this.titre = titre;
-        this.ageMin = ageMin;
-        this.dateParution = dateParution;
-        this.to = to;
-        this.prixLocation = prixLocation;
-        this.langue = langue;
-        this.genre = genre;
-        this.listAuteur = listAuteur;
-        this.listExemplaire = listExemplaire;
     }
 
     public String getTitre() {
@@ -129,5 +117,33 @@ public abstract class Ouvrage {
     }
 
     /* METHODES */
+    public abstract double amendeRetard(int njours);
+    public void addAuteur(Auteur a ){
+        listAuteur.add(a);
+        a.getListOuvrage().add(this);
+    }
+
+    public void remove(Auteur a){
+        listAuteur.remove(a);
+        a.getListOuvrage().remove(this);
+    }
+    public void addExemplaire(Exemplaire e){
+        listExemplaire.add(e);
+        e.setOuvrage(this);
+    }
+
+    public void remove(Exemplaire e){
+        listExemplaire.remove(e);
+        e.setOuvrage(null);
+    }
+    public List<Exemplaire>listerExemplairesOuvrage(){
+        //TODO lister exemplaires ouvrage
+        return null;
+    }
+
+    public List<Exemplaire>listerExemplairesLocation(boolean enLocation){
+        //TODO lister exemplaires ouvrage en location
+        return null;
+    }
 
 }

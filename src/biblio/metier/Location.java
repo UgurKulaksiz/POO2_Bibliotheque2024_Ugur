@@ -14,6 +14,8 @@ public class Location {
         this.dateRestitution = dateRestitution;
         this.loueur = loueur;
         this.exemplaire = exemplaire;
+        this.loueur.getListLocation().add(this);
+        this.exemplaire.getListLocation().add(this);
     }
 
     public Location(Lecteur loueur, Exemplaire exemplaire) {
@@ -77,5 +79,12 @@ public class Location {
     }
 
     /* METHODES */
+    public double calculerAmende(){
+        //TODO calcul amende location sur base dote restitution : la durée du prêt est de 15 jours pour les livres, 3 jours pour les DVD et 7 jours pour les CD
+        return 0;
+    }
+    public void enregistrerRetour(){
+        //TODO enregistrer retour => la date de restitution devient égale à la date actuelle
+    }
 
 }

@@ -12,40 +12,69 @@ import static biblio.metier.TypeOuvrage.LIVRE;
 
 public class Gestion {
     Scanner sc = new Scanner(System.in);
-    List<Auteur> listAuteur = new ArrayList<>();
-    List<Lecteur> listLecteur = new ArrayList<>();
-    List<Rayon> listRayon = new ArrayList<>();
+    private static List<Auteur> listAuteur = new ArrayList<>();
+    private static List<Exemplaire> listExemplaire = new ArrayList<>();
+    private static List<Lecteur> listLecteur = new ArrayList<>();
+    private static List<Location> listLocation = new ArrayList<>();
+    private static List<Ouvrage> listOuvrage = new ArrayList<>();
+    private static List<Rayon> listRayon = new ArrayList<>();
 
     public static void main(String[] args) {
         Auteur a = new Auteur("Verne", "Jules", "France");
-        Livre l = new Livre("Vingt mille lieues sous les mers", 10, LocalDate.of(1880, 1, 1), LIVRE, 1.50, "français", "aventure", "a125", 350, TypeLivre.ROMAN, "histoire de sous-marin");
-        a.getListOuvrage().add(l);
-        l.getListAuteur().add(a);
+        listAuteur.add(a);
+        Livre l = new Livre("Vingt mille lieues sous les mers", 10, LocalDate.of(1880, 1, 1), 1.50, "français", "aventure", "a125", 350, TypeLivre.ROMAN, "histoire de sous-marin");
+        listOuvrage.add(l);
+        a.addOuvrage(l);
+
+        a = new Auteur("Spielberg", "Steven", "USA");
+        listAuteur.add(a);
+
+        DVD d = new DVD("AI", 12, LocalDate.of(2000, 10, 1), 2.50, "anglais", "SF", 4578l, "120 min", (byte) 2);
+        d.getAutresLangues().add("français");
+        d.getAutresLangues().add("italien");
+        d.getSousTitres().add("néerlandais");
+        listOuvrage.add(d);
+        a.addOuvrage(d);
+
+        a = new Auteur("Kubrick", "Stanley", "GB");
+        listAuteur.add(a);
+        a.addOuvrage(d);
+
+        CD c = new CD("The Compil 2023", 0, LocalDate.of(2023, 1, 1), 2, "English", "POP", 1245, (byte) 20, "100 min");
+        listOuvrage.add(c);
 
         Rayon r = new Rayon("r12", "aventure");
+        listRayon.add(r);
         Exemplaire e = new Exemplaire("m12", "état neuf", l);
+        listExemplaire.add(e);
         e.setRayon(r);
-        r.getListExemplaire().add(e);
+
+        r = new Rayon("r45","science fiction");
+        listRayon.add(r);
+        e = new Exemplaire("d12","griffé",d);
+        listExemplaire.add(e);
+        e.setRayon(r);
 
         Lecteur lec = new Lecteur("Dupont", "Jean", LocalDate.of(2000, 1, 4), "Mons", "jean.dupont@mail.com", "0458774411");
-        Location loc = new Location(LocalDate.of(2023, 2, 1), LocalDate.of(2023, 3, 1), lec, e);
-        lec.getListLocation().add(loc);
-        e.getListLocation().add(loc);
+        listLecteur.add(lec);
 
-        /*
-        Lecteur lec2 = new Lecteur("Durant", "Louis", LocalDate.of(2005, 1, 5), "Tournai", "louis.durant@mail.com", "0495241010");
-        Location loc2 = new Location(LocalDate.of(2023, 2, 1), LocalDate.of(2023, 3, 1), lec2, e);
-        lec2.getListLocation().add(loc2);
-        */
+        Location loc = new Location(LocalDate.of(2023, 2, 1), LocalDate.of(2023, 3, 1), lec, e);
+        listLocation.add(loc);
+        loc.setDateRestitution(LocalDate.of(2023, 2, 4));
+
+
+        lec = new Lecteur ("Durant","Aline",LocalDate.of(1980,10,10),"Binche","aline.durant@mail.com","045874444");
+        listLecteur.add(lec);
+
+        loc = new Location(LocalDate.of(2023,2,5),LocalDate.of(2023,3,5),lec,e);
+        listLocation.add(loc);
 
         System.out.println("\n" + a);
         System.out.println("\n" + l);
         System.out.println("\n" + r);
         System.out.println("\n" + e);
         System.out.println("\n" + lec);
-        //System.out.println(lec2);
         System.out.println("\n" + loc);
-        //System.out.println("\n" + loc2);
         System.out.println();
 
 

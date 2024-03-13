@@ -120,4 +120,14 @@ public class Lecteur {
     }
 
     /* METHODES */
+    public List<Exemplaire> listerExemplairesEnLocationLecteur(){
+        //TODO lister exemplaires en location lecteur
+        return null;
+    }
+
+    public List<Exemplaire> listerExemplairesLouesLecteur(){
+        //TODO lister exemplaires loues lecteur
+        return null;
+    }
+
 }

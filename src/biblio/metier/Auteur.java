@@ -20,13 +20,6 @@ public class Auteur {
         this.nationalite = nationalite;
     }
 
-    public Auteur(String nom, String prenom, String nationalite, List<Ouvrage> listOuvrage) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.nationalite = nationalite;
-        this.listOuvrage = listOuvrage;
-    }
-
     public String getNom() {
         return nom;
     }
@@ -78,10 +71,36 @@ public class Auteur {
                 "nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", nationalite='" + nationalite + '\'' +
-                ", \nlistOuvrage=" + listOuvrage +
                 '}';
     }
 
     /* METHODES */
+    public void addOuvrage(Ouvrage o ){
+        listOuvrage.add(o);
+        o.getListAuteur().add(this);
+    }
+
+    public void removeOuvrage(Ouvrage o){
+        listOuvrage.remove(o);
+        o.getListAuteur().remove(this);
+    }
+
+    public List<Ouvrage> listerOuvrages(){
+        //TODO lister ouvrages
+        return null;
+    }
+
+    public List<Ouvrage> listerOuvragesType(TypeOuvrage to){
+        //TODO lister ouvrages d'un type
+        return null;
+    }
+    public List<Livre> listerLivres(TypeLivre tl){
+        //TODO lister livres d'un type
+        return null;
+    }
+    public List<Ouvrage> listerOuvragesGenre(String genre){
+        //TODO lister ouvrages d'un genre
+        return null;
+    }
 
 }
