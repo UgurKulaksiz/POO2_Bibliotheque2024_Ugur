@@ -12,9 +12,6 @@ public class Livre extends Ouvrage {
     private String resume;
 
 
-    public Livre() {
-    }
-
     public Livre(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre,String isbn,int nbrePages,TypeLivre tl,String resume) {
         super(titre, ageMin, dateParution,LIVRE, prixLocation, langue, genre);
         this.isbn=isbn;
@@ -82,7 +79,9 @@ public class Livre extends Ouvrage {
     @Override
     public double amendeRetard(int njours) {
         //TODO amendeRetard livre
-        return 0;
+        double amendeJour = 1.5;
+
+        return njours * amendeJour;
     }
 
 }

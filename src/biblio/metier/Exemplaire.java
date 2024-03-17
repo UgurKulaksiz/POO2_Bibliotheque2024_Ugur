@@ -110,7 +110,7 @@ public class Exemplaire {
     }
 
     public boolean enRetard(){
-        //TODO enretard exeplaire
+        //TODO enretard exemplaire
         return false;
     }
 
@@ -122,6 +122,10 @@ public class Exemplaire {
 
     public boolean enLocation(){
         //TODO en location exemplaires
+        for (Location l : listLocation){
+            if (l.getDateRestitution() == null) return true;  // Si la date de restitution est null --> l'exemplaire est actuellement en location
+        }
+
         return false;
     }
 

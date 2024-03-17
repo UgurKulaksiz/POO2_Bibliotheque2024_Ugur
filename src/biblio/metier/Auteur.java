@@ -87,7 +87,7 @@ public class Auteur {
 
     public List<Ouvrage> listerOuvrages(){
         //TODO lister ouvrages
-        return null;
+        return listOuvrage;
     }
 
     public List<Ouvrage> listerOuvragesType(TypeOuvrage to){

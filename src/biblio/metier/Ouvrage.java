@@ -138,12 +138,17 @@ public abstract class Ouvrage {
     }
     public List<Exemplaire>listerExemplairesOuvrage(){
         //TODO lister exemplaires ouvrage
-        return null;
+        return listExemplaire;
     }
 
     public List<Exemplaire>listerExemplairesLocation(boolean enLocation){
         //TODO lister exemplaires ouvrage en location
-        return null;
+        List<Exemplaire> exemplairesLocation = new ArrayList<>();
+        for (Exemplaire e : listExemplaire){
+            if (e.enLocation() == enLocation) exemplairesLocation.add(e);
+        }
+
+        return exemplairesLocation;
     }
 
 }

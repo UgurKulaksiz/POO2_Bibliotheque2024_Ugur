@@ -71,6 +71,8 @@ public class CD extends Ouvrage {
     @Override
     public double amendeRetard(int njours) {
         //TODO amendeRetard CD
-        return 0;
+        double amendeJour = 2.5;
+
+        return njours * amendeJour;
     }
 }

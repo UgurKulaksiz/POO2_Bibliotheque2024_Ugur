@@ -61,4 +61,7 @@ public class Rayon {
                 ", genre='" + genre + '\'' +
                 '}';
     }
+
+    /* METHODES */
+
 }

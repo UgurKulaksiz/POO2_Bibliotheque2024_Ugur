@@ -93,7 +93,9 @@ public class DVD extends Ouvrage {
     @Override
     public double amendeRetard(int njours) {
         //TODO amendeRetard DVD
-        return 0;
+        double amendeJour = 2;
+
+        return njours * amendeJour;
     }
 
 }
