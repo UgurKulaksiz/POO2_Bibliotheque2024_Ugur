@@ -1,5 +1,6 @@
 package biblio.metier;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -91,15 +92,32 @@ public class Exemplaire {
     /* METHODES */
     public void modifierEtatExemplaire(String etat){
         //TODO modifier etat exemplaire
+        List<Exemplaire> listExemplaireModifier = new ArrayList<>();
+
+        for (Exemplaire e : listExemplaireModifier){
+            e.setDescriptionEtat(etat);
+        }
     }
 
     public Lecteur lecteurActuelExemplaire(){
         //TODO lecteur actuel exemplaire
+        if (enLocation()){
+            for (Location l : listLocation){
+                if (l.getDateRestitution() == null) return l.getLoueur(); /* Retourne le lecteur (loueur) de la location */
+            }
+        }
+
         return null;
     }
     public List<Lecteur> lecteursExemplaire(){
-        //lecteurs exemplaire
-        return null;
+        //TODO lecteurs exemplaire
+        List<Lecteur> listLecteur = new ArrayList<>();
+
+        for (Location l : listLocation){
+            if (l.getDateRestitution() == null) listLecteur.add(l.getLoueur());
+        }
+
+        return listLecteur;
     }
 
     public void envoiMailLecteurActuelExemplaire(Mail mail){
@@ -111,6 +129,13 @@ public class Exemplaire {
 
     public boolean enRetard(){
         //TODO enretard exemplaire
+        if (enLocation()){
+            for (Location l : listLocation){
+                if (l.getDateRestitution() != null && l.getDateRestitution().isBefore(LocalDate.now()))
+                        return true; /* Si la date de restitution n'est pas null et qu'il est inférieur à la date actuelle, l'exemplaire est en retard */
+            }
+        }
+
         return false;
     }
 

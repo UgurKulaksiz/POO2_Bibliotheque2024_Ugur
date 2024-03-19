@@ -122,6 +122,7 @@ public class Gestion {
                     ajoutExemplaire();
                     break;
                 case 6:
+                    /* Louer un exemplaire */
                     break;
                 case 7:
                     ajoutLocation();
@@ -366,5 +367,30 @@ public class Gestion {
 
     public void ajoutLocation() {
         //TODO lister exemplaires,lister lecteurs,créer la location avec le constructeur à deux paramètres(loueur,exemplaire)
+        List<Exemplaire> listExemplaireDispo = new ArrayList<>();
+
+        for (Exemplaire e : listExemplaire){
+            if (!e.enLocation()) listExemplaireDispo.add(e);
+        }
+
+        List<Lecteur> listLecteurDispo = new ArrayList<>();
+
+        if (listLecteur != null){
+            for (Lecteur l : listLecteur){
+                listLecteurDispo = listLecteur;
+            }
+        }
+
+        if (!listExemplaireDispo.isEmpty() && !listLecteurDispo.isEmpty()){
+            Lecteur lec = listLecteurDispo.remove(0);
+            Exemplaire e = listExemplaireDispo.remove(0);
+
+            Location newLocation = new Location(lec, e);
+            listLocation.add(newLocation);
+
+            System.out.println("Location ajoutée avec succés");
+            System.out.println(newLocation);
+        }
+
     }
 }
