@@ -292,6 +292,7 @@ public class Gestion {
         Rayon r = new Rayon(codeRayon, genre);
         listRayon.add(r);
         System.out.println("Rayon créé");
+        System.out.println("eeee");
     }
 
     public void ajoutExemplaire() {
