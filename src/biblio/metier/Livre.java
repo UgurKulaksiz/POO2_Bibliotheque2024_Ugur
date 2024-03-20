@@ -77,7 +77,7 @@ public class Livre extends Ouvrage {
     /* METHODES */
     @Override
     public double amendeRetard(int njours) {
-        //TODO amendeRetard livre
+        // amendeRetard livre
         return njours * 0.25;
     }
 

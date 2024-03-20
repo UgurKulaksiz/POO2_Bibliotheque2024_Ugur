@@ -98,7 +98,7 @@ public class Location {
     }
 
     public void enregistrerRetour() {
-        //TODO enregistrer retour => la date de restitution devient égale à la date actuelle
+        // enregistrer retour => la date de restitution devient égale à la date actuelle
         List<Location> listLocationRetour = new ArrayList<>();
 
         for (Location l : exemplaire.getListLocation()) {

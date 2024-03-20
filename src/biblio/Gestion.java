@@ -94,6 +94,7 @@ public class Gestion {
 
         int choix;
         do {
+            System.out.println("MENU PRINCIPAL");
             choix = Utilitaire.choixListe(options);
 
             switch (choix) {
@@ -116,7 +117,7 @@ public class Gestion {
                     ajoutLocation();
                     break;
                 case 7:
-                    System.out.println("Fin du programme.");
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Choix invalide.");
@@ -233,6 +234,7 @@ public class Gestion {
         }
         listOuvrage.add(o);
         System.out.println("Ouvrage créé");
+        //TODO ajouter 1 auteur à la liste des auteurs
     }
 
     public void ajoutLecteur() {
