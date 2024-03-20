@@ -10,7 +10,7 @@ import static biblio.metier.TypeOuvrage.DVD;
 
 public class DVD extends Ouvrage {
     private long code;
-    private String dureeTotale;
+    private LocalTime dureeTotale;
     private byte nbreBonus;
     private List<String> autresLangues = new ArrayList<>();
     private List<String> sousTitres = new ArrayList<>();
@@ -18,7 +18,7 @@ public class DVD extends Ouvrage {
     public DVD() {
     }
 
-    public DVD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, String dureeTotale, byte nbreBonus) {
+    public DVD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, LocalTime dureeTotale, byte nbreBonus) {
         super(titre, ageMin, dateParution, DVD, prixLocation, langue, genre);
         this.code=code;
         this.dureeTotale=dureeTotale;
@@ -33,11 +33,11 @@ public class DVD extends Ouvrage {
         this.code = code;
     }
 
-    public String getDureeTotale() {
+    public LocalTime getDureeTotale() {
         return dureeTotale;
     }
 
-    public void setDureeTotale(String dureeTotale) {
+    public void setDureeTotale(LocalTime dureeTotale) {
         this.dureeTotale = dureeTotale;
     }
 
@@ -92,10 +92,12 @@ public class DVD extends Ouvrage {
     /* METHODES */
     @Override
     public double amendeRetard(int njours) {
-        //TODO amendeRetard DVD
-        double amendeJour = 2;
+        // amendeRetard DVD
+        return njours * 1.5;
+    }
 
-        return njours * amendeJour;
+    @Override public int njoursLocMax(){
+        return 3;
     }
 
 }

@@ -1,6 +1,7 @@
 package biblio.metier;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,7 +20,7 @@ public class Exemplaire {
 
     public Exemplaire(String matricule, String descriptionEtat, Ouvrage ouvrage) {
         this.matricule = matricule;
-        this.descriptionEtat=descriptionEtat;
+        this.descriptionEtat = descriptionEtat;
         this.ouvrage = ouvrage;
         this.ouvrage.getListExemplaire().add(this);
     }
@@ -53,8 +54,8 @@ public class Exemplaire {
     }
 
     public void setRayon(Rayon rayon) {
-        if(this.rayon!=null) this.rayon.getListExemplaire().remove(this);
-        this.rayon=rayon;
+        if (this.rayon != null) this.rayon.getListExemplaire().remove(this);
+        this.rayon = rayon;
         this.rayon.getListExemplaire().add(this);
     }
 
@@ -90,66 +91,79 @@ public class Exemplaire {
     }
 
     /* METHODES */
-    public void modifierEtatExemplaire(String etat){
-        //TODO modifier etat exemplaire
-        List<Exemplaire> listExemplaireModifier = new ArrayList<>();
-
-        for (Exemplaire e : listExemplaireModifier){
-            e.setDescriptionEtat(etat);
-        }
+    public void modifierEtatExemplaire(String etat) {
+        // modifier etat exemplaire
+        setDescriptionEtat(etat);
     }
 
-    public Lecteur lecteurActuelExemplaire(){
-        //TODO lecteur actuel exemplaire
-        if (enLocation()){
-            for (Location l : listLocation){
-                if (l.getDateRestitution() == null) return l.getLoueur(); /* Retourne le lecteur (loueur) de la location */
-            }
+    public Lecteur lecteurActuelExemplaire() {
+        // lecteur actuel exemplaire
+        if (enLocation())
+            return listLocation.get(listLocation.size() - 1).getLoueur(); /* Retourne le lecteur (loueur) de la location */
+
+        return null;
+    }
+
+    public List<Lecteur> lecteurs() {
+        List<Lecteur> listL = new ArrayList<>();
+        for (Location l : listLocation) {
+            if (listL.contains(l)) continue; //par la suite utiliser set
+            listL.add(l.getLoueur());
         }
 
         return null;
     }
-    public List<Lecteur> lecteursExemplaire(){
-        //TODO lecteurs exemplaire
-        List<Lecteur> listLecteur = new ArrayList<>();
 
-        for (Location l : listLocation){
-            if (l.getDateRestitution() == null) listLecteur.add(l.getLoueur());
-        }
+    public void envoiMailLecteurActuelExemplaire(Mail mail) {
+        // envoi mail lecteur exemplaire
+        if (lecteurActuelExemplaire() != null)
+            System.out.println("Envoi de " + mail + " à " + lecteurActuelExemplaire().getMail());
+        else System.out.println("Aucune location en cours");
 
-        return listLecteur;
     }
 
-    public void envoiMailLecteurActuelExemplaire(Mail mail){
-        //TODO envoi mail lecteur exemplaire
-    }
-    public void envoiMailLecteursExemplaire(Mail mail){
-        //TODO envoi mail lecteurs exemplaire
-    }
-
-    public boolean enRetard(){
-        //TODO enretard exemplaire
-        if (enLocation()){
-            for (Location l : listLocation){
-                if (l.getDateRestitution() != null && l.getDateRestitution().isBefore(LocalDate.now()))
-                        return true; /* Si la date de restitution n'est pas null et qu'il est inférieur à la date actuelle, l'exemplaire est en retard */
+    public void envoiMailLecteursExemplaire(Mail mail) {
+        // envoi mail lecteurs exemplaire
+        List<Lecteur> listL = lecteurs();
+        if (listL.isEmpty()) {
+            System.out.println("Aucun lecteur enregistré");
+        } else {
+            for (Lecteur l : listL) {
+                System.out.println("Envoi de " + mail + " à " + l.getMail());
             }
         }
+    }
 
+    public boolean enRetard() {
+        // enretard exemplaire
+        if(listLocation.isEmpty()) return false;
+
+        Location l = listLocation.get(listLocation.size()-1); /* Récupèrer la dernière location en cours */
+        if(l.getDateRestitution() == null && l.getDateLocation().plusDays(ouvrage.njoursLocMax()).isAfter(LocalDate.now()))
+            return true;
+        
         return false;
     }
 
-    public int joursRetard(){
-        //TODO jours retard exemplaire
-        return 0;
+    public int joursRetard() {
+        // jours retard exemplaire
+        if (!enRetard()) return 0;
+
+        Location l = listLocation.get(listLocation.size()-1); /* La location en cours est la dernière de la liste */
+        LocalDate dateLimite = l.getDateLocation().plusDays(ouvrage.njoursLocMax());
+
+        int njoursRetard = (int) ChronoUnit.DAYS.between(dateLimite, LocalDate.now());
+
+        return njoursRetard;
     }
 
 
-    public boolean enLocation(){
-        //TODO en location exemplaires
-        for (Location l : listLocation){
-            if (l.getDateRestitution() == null) return true;  // Si la date de restitution est null --> l'exemplaire est actuellement en location
-        }
+    public boolean enLocation() {
+        // en location exemplaires
+        if (listLocation.isEmpty()) return false;
+
+        Location l = listLocation.get(listLocation.size()-1);
+        if (l.getDateRestitution() == null) return true; // Si la date de restitution est null --> l'exemplaire est actuellement en location
 
         return false;
     }

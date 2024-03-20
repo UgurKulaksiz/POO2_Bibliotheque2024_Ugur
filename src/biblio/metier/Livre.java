@@ -3,7 +3,6 @@ package biblio.metier;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import static biblio.metier.TypeOuvrage.LIVRE;
 
 public class Livre extends Ouvrage {
     private String isbn;
@@ -13,7 +12,7 @@ public class Livre extends Ouvrage {
 
 
     public Livre(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre,String isbn,int nbrePages,TypeLivre tl,String resume) {
-        super(titre, ageMin, dateParution,LIVRE, prixLocation, langue, genre);
+        super(titre, ageMin, dateParution,TypeOuvrage.LIVRE, prixLocation, langue, genre);
         this.isbn=isbn;
         this.nbrePages=nbrePages;
         this.tl=tl;
@@ -79,9 +78,12 @@ public class Livre extends Ouvrage {
     @Override
     public double amendeRetard(int njours) {
         //TODO amendeRetard livre
-        double amendeJour = 1.5;
+        return njours * 0.25;
+    }
 
-        return njours * amendeJour;
+    @Override
+    public int njoursLocMax(){
+        return 15;
     }
 
 }

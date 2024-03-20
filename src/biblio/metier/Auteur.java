@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static biblio.metier.TypeOuvrage.LIVRE;
+
 public class Auteur {
     private String nom;
     private String prenom;
@@ -86,44 +88,40 @@ public class Auteur {
     }
 
     public List<Ouvrage> listerOuvrages(){
-        //TODO lister ouvrages
+        // lister ouvrages
         return listOuvrage;
     }
 
-    public List<Ouvrage> listerOuvragesType(TypeOuvrage to){
-        //TODO lister ouvrages d'un type
+    public List<Ouvrage> listerOuvrages(TypeOuvrage to){
+        // lister ouvrages d'un type
         List<Ouvrage> listOuvrageType = new ArrayList<>();
 
         /* Parcourir les ouvrages */
         for (Ouvrage o : listOuvrage){
-            if (o.getTo() == to){
-                listOuvrageType.add(o);
-            }
+            if (o.getTo().equals(to)) listOuvrageType.add(o);
         }
 
         return listOuvrageType;
     }
     public List<Livre> listerLivres(TypeLivre tl){
-        //TODO lister livres d'un type
+        // lister livres d'un type
         List<Livre> listLivreType = new ArrayList<>();
 
         for (Ouvrage o : listOuvrage){
-            /* instanceof --> Vérifier si chaque ouvrage est un livre */
-            if (o instanceof Livre && ((Livre) o).getTl() == tl){
-                listLivreType.add((Livre) o);
+            if(o.getTo().equals(LIVRE)) {
+                Livre l = (Livre)o;
+                if(l.getTl().equals(tl)) listLivreType.add(l);
             }
         }
 
         return listLivreType;
     }
-    public List<Ouvrage> listerOuvragesGenre(String genre){
-        //TODO lister ouvrages d'un genre
+    public List<Ouvrage> listerOuvrages(String genre){
+        // lister ouvrages d'un genre
         List<Ouvrage> listOuvrageGenre = new ArrayList<>();
 
         for (Ouvrage o : listOuvrage){
-            if (o.getGenre() == genre){
-                listOuvrageGenre.add(o);
-            }
+            if (o.getGenre().equals(genre)) listOuvrageGenre.add(o);
         }
 
         return listOuvrageGenre;

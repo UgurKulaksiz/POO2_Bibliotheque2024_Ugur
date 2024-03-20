@@ -1,21 +1,20 @@
 package biblio.metier;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
-
-import static biblio.metier.TypeOuvrage.CD;
 
 public class CD extends Ouvrage {
     private long code;
     private byte nbrePlages;
-    private String dureeTotale;
+    private LocalTime dureeTotale;
 
 
     public CD() {
     }
 
-    public CD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, byte nbrePlages, String dureeTotale) {
-        super(titre, ageMin, dateParution, CD, prixLocation, langue, genre);
+    public CD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, byte nbrePlages, LocalTime dureeTotale) {
+        super(titre, ageMin, dateParution, TypeOuvrage.CD, prixLocation, langue, genre);
         this.code = code;
         this.nbrePlages = nbrePlages;
         this.dureeTotale = dureeTotale;
@@ -37,11 +36,11 @@ public class CD extends Ouvrage {
         this.nbrePlages = nbrePlages;
     }
 
-    public String getDureeTotale() {
+    public LocalTime getDureeTotale() {
         return dureeTotale;
     }
 
-    public void setDureeTotale(String dureeTotale) {
+    public void setDureeTotale(LocalTime dureeTotale) {
         this.dureeTotale = dureeTotale;
     }
 
@@ -70,9 +69,12 @@ public class CD extends Ouvrage {
     /* METHODES */
     @Override
     public double amendeRetard(int njours) {
-        //TODO amendeRetard CD
-        double amendeJour = 2.5;
+        // amendeRetard CD
+        return njours * 0.50;
+    }
 
-        return njours * amendeJour;
+    @Override
+    public int njoursLocMax(){
+        return 7;
     }
 }

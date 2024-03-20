@@ -117,13 +117,12 @@ public abstract class Ouvrage {
     }
 
     /* METHODES */
-    public abstract double amendeRetard(int njours);
     public void addAuteur(Auteur a ){
         listAuteur.add(a);
         a.getListOuvrage().add(this);
     }
 
-    public void remove(Auteur a){
+    public void removeAuteur(Auteur a){
         listAuteur.remove(a);
         a.getListOuvrage().remove(this);
     }
@@ -132,23 +131,27 @@ public abstract class Ouvrage {
         e.setOuvrage(this);
     }
 
-    public void remove(Exemplaire e){
+    public void removeExemplaire(Exemplaire e){
         listExemplaire.remove(e);
         e.setOuvrage(null);
     }
     public List<Exemplaire>listerExemplairesOuvrage(){
-        //TODO lister exemplaires ouvrage
+        // lister exemplaires ouvrage
         return listExemplaire;
     }
 
     public List<Exemplaire>listerExemplairesLocation(boolean enLocation){
-        //TODO lister exemplaires ouvrage en location
-        List<Exemplaire> exemplairesLocation = new ArrayList<>();
+        // lister exemplaires ouvrage en location
+        List<Exemplaire> listExemplairesLocation = new ArrayList<>();
         for (Exemplaire e : listExemplaire){
-            if (e.enLocation() == enLocation) exemplairesLocation.add(e);
+            if (e.enLocation() == enLocation) listExemplairesLocation.add(e);
         }
 
-        return exemplairesLocation;
+        return listExemplairesLocation;
     }
 
+    /* METHODES */
+    public abstract double amendeRetard(int njours);
+
+    public abstract int njoursLocMax();
 }

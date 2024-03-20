@@ -1,6 +1,7 @@
 package biblio.metier;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +24,7 @@ public class Location {
     public Location(Lecteur loueur, Exemplaire exemplaire) {
         this.loueur = loueur;
         this.exemplaire = exemplaire;
+        this.dateLocation = LocalDate.now();
     }
 
     public LocalDate getDateLocation() {
@@ -82,53 +84,25 @@ public class Location {
 
     /* METHODES */
     public double calculerAmende() {
-        //TODO calcul amende location sur base dote restitution : la durée du prêt est de 15 jours pour les livres, 3 jours pour les DVD et 7 jours pour les CD
-        double amende = 0.0;
+        // calcul amende location sur base dote restitution : la durée du prêt est de 15 jours pour les livres, 3 jours pour les DVD et 7 jours pour les CD
+        if (dateRestitution != null) {
+            LocalDate dateLimite = dateLocation.plusDays(exemplaire.getOuvrage().njoursLocMax());
 
-        int joursMaxLivres = 15;
-        int joursMaxDVD = 3;
-        int joursMaxCD = 7;
+            if (dateRestitution.isAfter(dateLimite)) {
+                int njretard = (int) ChronoUnit.DAYS.between(dateLimite, dateRestitution);
 
-        for (Location l : exemplaire.getListLocation()) {
-            if (l.getDateRestitution() == null) {
-                LocalDate dateLocation = l.getDateLocation();
-                LocalDate dateActuelle = LocalDate.now();
-
-                int joursRetard = dateLocation.until(dateActuelle).getDays();
-
-                int joursMaxRetard = 0;
-
-                TypeOuvrage to = l.getExemplaire().getOuvrage().getTo();
-                switch (to) {
-                    case LIVRE:
-                        joursMaxRetard = joursMaxLivres;
-                        break;
-
-                    case DVD:
-                        joursMaxRetard = joursMaxDVD;
-                        break;
-
-                    case CD:
-                        joursMaxRetard = joursMaxCD;
-                        break;
-                }
-
-                if (joursRetard > joursMaxRetard){
-                    amende += (joursRetard - joursMaxRetard) * 0.5;
-                }
+                return exemplaire.getOuvrage().amendeRetard(njretard);
             }
         }
-
-
-        return amende;
+        return 0;
     }
 
     public void enregistrerRetour() {
         //TODO enregistrer retour => la date de restitution devient égale à la date actuelle
         List<Location> listLocationRetour = new ArrayList<>();
 
-        for (Location l : exemplaire.getListLocation()){
-            if (l.getDateRestitution() != null && l.getDateRestitution().isEqual(LocalDate.now())){
+        for (Location l : exemplaire.getListLocation()) {
+            if (l.getDateRestitution() != null && l.getDateRestitution().isEqual(LocalDate.now())) {
                 l.setDateRestitution(LocalDate.now()); /* MàJ de la date de restitution */
                 listLocationRetour.add(l);
             }
