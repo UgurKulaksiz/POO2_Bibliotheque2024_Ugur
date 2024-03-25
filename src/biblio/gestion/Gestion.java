@@ -1,4 +1,4 @@
-package biblio;
+package biblio.gestion;
 
 import biblio.metier.*;
 import biblio.utilitaires.Utilitaire;
