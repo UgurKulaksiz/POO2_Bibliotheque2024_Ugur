@@ -63,5 +63,15 @@ public class Rayon {
     }
 
     /* METHODES */
+    public void addExemplaire(Exemplaire e){
+        /* Ajout d'un exemplaire au rayon */
+        listExemplaire.add(e);
+        e.setRayon(this);
+    }
+
+    public void remove(Exemplaire e){
+        listExemplaire.remove(e);
+        e.setRayon(null);
+    }
 
 }

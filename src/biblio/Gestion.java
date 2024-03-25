@@ -5,10 +5,7 @@ import biblio.utilitaires.Utilitaire;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Gestion {
@@ -214,27 +211,37 @@ public class Gestion {
                 o = new DVD(titre, ageMin, dateParution, prixLoc, langue, genre, code, dureeTotale, nbreBonus);
 
                 System.out.println("Autres langues");
-                List<String> langues = new ArrayList<>(Arrays.asList("anglais", "français", "italien", "allemand", "fin"));
+                //List<String> langues = new ArrayList<>(Arrays.asList("anglais", "français", "italien", "allemand", "fin"));
+                Set<String> langues = new HashSet<>();
                 do {
-                    choix = Utilitaire.choixListe(langues);
-                    if (choix == langues.size()) break;
+                    String choixLangues = sc.nextLine();
+                    if (choixLangues.equals("fin")) break;
 
-                    ((DVD) o).getAutresLangues().add(langues.get(choix - 1));//TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
+                    langues.add(choixLangues);
+
                 } while (true);
+
+                ((DVD) o).setAutresLangues(langues);//TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
 
                 System.out.println("Sous-titres");
+                Set<String> sousTitres = new HashSet<>();
                 do {
-                    choix = Utilitaire.choixListe(langues);
-                    if (choix == langues.size()) break;
+                    String choixSousTitres = sc.nextLine();
+                    if (choixSousTitres.equals("fin")) break;
 
-                    ((DVD) o).getSousTitres().add(langues.get(choix - 1));//TODO vérifier unicité ou utiliser set
+                    sousTitres.add(choixSousTitres);
                 } while (true);
+
+                ((DVD) o).setSousTitres(sousTitres);//TODO vérifier unicité ou utiliser set
 
                 break;
         }
         listOuvrage.add(o);
         System.out.println("Ouvrage créé");
         //TODO ajouter 1 auteur à la liste des auteurs
+        System.out.println("Ajout d'un auteur");
+        ajoutAuteur();
+
     }
 
     public void ajoutLecteur() {
@@ -287,8 +294,15 @@ public class Gestion {
         listExemplaire.add(e);
 
         System.out.println("Exemplaire de l'ouvrage a été créé avec succés");
-        //TODO attribuer rayon
 
+        //TODO attribuer rayon
+        System.out.println("Attribuer un rayon à cet exemplaire");
+        int choixRayon = Utilitaire.choixListe(listRayon);
+
+        Rayon r = listRayon.get(choixRayon-1);
+        e.setRayon(r);
+
+        System.out.println("Rayon attribué à cet exemplaire");
     }
 
     public void ajoutLocation() {

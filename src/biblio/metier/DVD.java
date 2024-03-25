@@ -2,9 +2,7 @@ package biblio.metier;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static biblio.metier.TypeOuvrage.DVD;
 
@@ -12,8 +10,13 @@ public class DVD extends Ouvrage {
     private long code;
     private LocalTime dureeTotale;
     private byte nbreBonus;
+    /*
     private List<String> autresLangues = new ArrayList<>();
     private List<String> sousTitres = new ArrayList<>();
+     */
+
+    private Set<String> autresLangues = new HashSet<>();
+    private Set<String> sousTitres = new HashSet<>();
 
     public DVD() {
     }
@@ -23,6 +26,8 @@ public class DVD extends Ouvrage {
         this.code=code;
         this.dureeTotale=dureeTotale;
         this.nbreBonus=nbreBonus;
+        this.autresLangues = new HashSet<>();
+        this.sousTitres = new HashSet<>();
     }
 
     public long getCode() {
@@ -49,19 +54,19 @@ public class DVD extends Ouvrage {
         this.nbreBonus = nbreBonus;
     }
 
-    public List<String> getAutresLangues() {
+    public Set<String> getAutresLangues() {
         return autresLangues;
     }
 
-    public void setAutresLangues(List<String> autresLangues) {
+    public void setAutresLangues(Set<String> autresLangues) {
         this.autresLangues = autresLangues;
     }
 
-    public List<String> getSousTitres() {
+    public Set<String> getSousTitres() {
         return sousTitres;
     }
 
-    public void setSousTitres(List<String> sousTitres) {
+    public void setSousTitres(Set<String> sousTitres) {
         this.sousTitres = sousTitres;
     }
 

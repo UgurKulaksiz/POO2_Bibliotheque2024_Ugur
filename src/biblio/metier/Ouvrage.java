@@ -150,7 +150,6 @@ public abstract class Ouvrage {
         return listExemplairesLocation;
     }
 
-    /* METHODES */
     public abstract double amendeRetard(int njours);
 
     public abstract int njoursLocMax();
