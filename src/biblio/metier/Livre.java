@@ -66,12 +66,12 @@ public class Livre extends Ouvrage {
 
     @Override
     public String toString() {
-        return super.toString()+ "Livre{" +
+        return super.toString()+ "\nLivre{" +
                 "isbn='" + isbn + '\'' +
                 ", nbrePages=" + nbrePages +
                 ", tl=" + tl +
                 ", resume='" + resume + '\'' +
-                "} \n" + super.toString();
+                "}";
     }
 
     /* METHODES */

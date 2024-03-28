@@ -12,6 +12,7 @@ public class Auteur {
     private String nationalite;
 
     private List<Ouvrage> listOuvrage = new ArrayList<>();
+    //TODO remplacer par set
 
     public Auteur() {
     }

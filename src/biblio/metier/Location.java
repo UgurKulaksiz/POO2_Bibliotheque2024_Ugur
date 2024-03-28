@@ -97,6 +97,7 @@ public class Location {
         return 0;
     }
 
+    /* Demander explication au prof cette méthode */
     public void enregistrerRetour() {
         // enregistrer retour => la date de restitution devient égale à la date actuelle
         List<Location> listLocationRetour = new ArrayList<>();

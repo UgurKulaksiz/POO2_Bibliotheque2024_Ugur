@@ -15,8 +15,10 @@ public abstract class Ouvrage {
 
 
     protected List<Auteur> listAuteur = new ArrayList<>();
+    //TODO remplacer par set
 
     protected List<Exemplaire> listExemplaire = new ArrayList<>();
+    //TODO remplacer par set
 
     public Ouvrage() {
     }

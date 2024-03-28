@@ -2,9 +2,10 @@ package biblio.metier;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
-import static biblio.metier.TypeOuvrage.DVD;
 
 public class DVD extends Ouvrage {
     private long code;
@@ -21,8 +22,15 @@ public class DVD extends Ouvrage {
     public DVD() {
     }
 
+    public DVD(String titre, int ageMin, LocalDate dateParution, TypeOuvrage to, double prixLocation, String langue, String genre, long code, LocalTime dureeTotale, byte nbreBonus) {
+        super(titre, ageMin, dateParution, TypeOuvrage.DVD, prixLocation, langue, genre);
+        this.code = code;
+        this.dureeTotale = dureeTotale;
+        this.nbreBonus = nbreBonus;
+    }
+
     public DVD(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre, long code, LocalTime dureeTotale, byte nbreBonus) {
-        super(titre, ageMin, dateParution, DVD, prixLocation, langue, genre);
+        super(titre, ageMin, dateParution, TypeOuvrage.DVD, prixLocation, langue, genre);
         this.code=code;
         this.dureeTotale=dureeTotale;
         this.nbreBonus=nbreBonus;
@@ -85,13 +93,13 @@ public class DVD extends Ouvrage {
 
     @Override
     public String toString() {
-        return "DVD{" +
+        return super.toString()+"\nDVD{" +
                 "code=" + code +
                 ", dureeTotale=" + dureeTotale +
                 ", nbreBonus=" + nbreBonus +
                 ", autresLangues=" + autresLangues +
                 ", sousTitres=" + sousTitres +
-                "} \n" + super.toString();
+                "}";
     }
 
     /* METHODES */

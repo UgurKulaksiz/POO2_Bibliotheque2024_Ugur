@@ -121,7 +121,7 @@ public class Lecteur {
 
     /* METHODES */
     public List<Exemplaire> listerExemplairesEnLocationLecteur(){
-        //TODO lister exemplaires en location lecteur
+        // lister exemplaires en location lecteur
         List<Exemplaire> listExemplaireLocation = new ArrayList<>();
 
         if (listLocation != null){
@@ -136,13 +136,12 @@ public class Lecteur {
     }
 
     public List<Exemplaire> listerExemplairesLouesLecteur(){
-        //TODO lister exemplaires loues lecteur
+        // lister exemplaires loues lecteur
         List<Exemplaire> listExemplaireLoues = new ArrayList<>();
 
         for (Location l : listLocation){
-            if (l != null){
                 listExemplaireLoues.add(l.getExemplaire());
-            }
+                //TODO empêcher doublon si exemplaire loué plusieurs fois par même lecteur
         }
 
         return listExemplaireLoues;

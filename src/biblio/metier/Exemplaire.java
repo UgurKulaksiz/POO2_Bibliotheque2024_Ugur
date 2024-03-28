@@ -46,7 +46,9 @@ public class Exemplaire {
     }
 
     public void setOuvrage(Ouvrage ouvrage) {
+        if(this.ouvrage!=null) this.ouvrage.getListExemplaire().remove(this);
         this.ouvrage = ouvrage;
+        this.ouvrage.getListExemplaire().add(this);
     }
 
     public Rayon getRayon() {
@@ -106,6 +108,7 @@ public class Exemplaire {
 
     public List<Lecteur> lecteurs() {
         List<Lecteur> listL = new ArrayList<>();
+
         for (Location l : listLocation) {
             if (listL.contains(l)) continue; //par la suite utiliser set
             listL.add(l.getLoueur());
@@ -135,7 +138,7 @@ public class Exemplaire {
     }
 
     public boolean enRetard() {
-        // enretard exemplaire
+        // en retard exemplaire
         if(listLocation.isEmpty()) return false;
 
         Location l = listLocation.get(listLocation.size()-1); /* Récupèrer la dernière location en cours */

@@ -59,11 +59,11 @@ public class CD extends Ouvrage {
 
     @Override
     public String toString() {
-        return super.toString()+"CD{" +
+        return super.toString()+"\nCD{" +
                 "code=" + code +
                 ", nbrePlages=" + nbrePlages +
                 ", dureeTotale='" + dureeTotale + '\'' +
-                "} \n" + super.toString();
+                "}";
     }
 
     /* METHODES */
