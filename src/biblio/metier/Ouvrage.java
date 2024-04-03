@@ -2,7 +2,9 @@ package biblio.metier;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class Ouvrage {
     protected String titre;
@@ -14,11 +16,11 @@ public abstract class Ouvrage {
     protected String genre;
 
 
-    protected List<Auteur> listAuteur = new ArrayList<>();
-    //TODO remplacer par set
+    protected Set<Auteur> listAuteur = new HashSet<>();
+    // remplacer par set
 
-    protected List<Exemplaire> listExemplaire = new ArrayList<>();
-    //TODO remplacer par set
+    protected Set<Exemplaire> listExemplaire = new HashSet<>();
+    // remplacer par set
 
     public Ouvrage() {
     }
@@ -89,19 +91,19 @@ public abstract class Ouvrage {
         this.genre = genre;
     }
 
-    public List<Auteur> getListAuteur() {
+    public Set<Auteur> getListAuteur() {
         return listAuteur;
     }
 
-    public void setListAuteur(List<Auteur> listAuteur) {
+    public void setListAuteur(Set<Auteur> listAuteur) {
         this.listAuteur = listAuteur;
     }
 
-    public List<Exemplaire> getListExemplaire() {
+    public Set<Exemplaire> getListExemplaire() {
         return listExemplaire;
     }
 
-    public void setListExemplaire(List<Exemplaire> listExemplaire) {
+    public void setListExemplaire(Set<Exemplaire> listExemplaire) {
         this.listExemplaire = listExemplaire;
     }
 
@@ -137,7 +139,7 @@ public abstract class Ouvrage {
         listExemplaire.remove(e);
         e.setOuvrage(null);
     }
-    public List<Exemplaire>listerExemplairesOuvrage(){
+    public Set<Exemplaire>listerExemplairesOuvrage(){
         // lister exemplaires ouvrage
         return listExemplaire;
     }

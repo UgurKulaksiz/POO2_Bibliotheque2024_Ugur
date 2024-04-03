@@ -1,8 +1,6 @@
 package biblio.metier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static biblio.metier.TypeOuvrage.LIVRE;
 
@@ -11,8 +9,8 @@ public class Auteur {
     private String prenom;
     private String nationalite;
 
-    private List<Ouvrage> listOuvrage = new ArrayList<>();
-    //TODO remplacer par set
+    private Set<Ouvrage> listOuvrage = new HashSet<>();
+    // remplacer par set
 
     public Auteur() {
     }
@@ -47,11 +45,11 @@ public class Auteur {
         this.nationalite = nationalite;
     }
 
-    public List<Ouvrage> getListOuvrage() {
+    public Set<Ouvrage> getListOuvrage() {
         return listOuvrage;
     }
 
-    public void setListOuvrage(List<Ouvrage> listOuvrage) {
+    public void setListOuvrage(Set<Ouvrage> listOuvrage) {
         this.listOuvrage = listOuvrage;
     }
 
@@ -88,7 +86,7 @@ public class Auteur {
         o.getListAuteur().remove(this);
     }
 
-    public List<Ouvrage> listerOuvrages(){
+    public Set<Ouvrage> listerOuvrages(){
         // lister ouvrages
         return listOuvrage;
     }

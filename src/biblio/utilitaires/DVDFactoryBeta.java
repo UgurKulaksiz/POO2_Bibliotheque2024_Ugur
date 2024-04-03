@@ -33,6 +33,7 @@ public class DVDFactoryBeta {
         //détails propres à la classe DVD
         System.out.println("Code : ");
         long code = sc.nextLong();
+        System.out.println("Durée totale : ");
         LocalTime dureeTotale = Utilitaire.lecTime();
         byte nbreBonus = sc.nextByte();
 

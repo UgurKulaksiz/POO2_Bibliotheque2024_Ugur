@@ -1,14 +1,12 @@
 package biblio.metier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Rayon {
     private String codeRayon;
     private String genre;
-    private List<Exemplaire> listExemplaire = new ArrayList<>();
-    //TODO remplacer par set
+    private Set<Exemplaire> listExemplaire = new HashSet<>();
+    // remplacer par set
 
     public Rayon() {
     }
@@ -34,11 +32,11 @@ public class Rayon {
         this.genre = genre;
     }
 
-    public List<Exemplaire> getListExemplaire() {
+    public Set<Exemplaire> getListExemplaire() {
         return listExemplaire;
     }
 
-    public void setListExemplaire(List<Exemplaire> listExemplaire) {
+    public void setListExemplaire(Set<Exemplaire> listExemplaire) {
         this.listExemplaire = listExemplaire;
     }
 

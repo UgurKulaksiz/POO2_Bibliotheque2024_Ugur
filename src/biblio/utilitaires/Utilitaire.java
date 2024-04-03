@@ -11,12 +11,12 @@ public class Utilitaire {
     public static int choixListe(List l) {
         int i = 1;
         for (Object o : l) {
-            System.out.println((i++) + "." + o);
+            System.out.println((i++) + ". " + o);
         }
 
         int choix;
         do {
-            System.out.println("choix :");
+            System.out.println("Choix (0 pour aucun) :");
             choix = sc.nextInt();
             sc.skip("\n");
         } while (choix < 1 || choix > l.size());

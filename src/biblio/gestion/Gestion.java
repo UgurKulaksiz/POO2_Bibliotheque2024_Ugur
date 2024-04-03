@@ -5,6 +5,7 @@ import biblio.utilitaires.CDFactoryBeta;
 import biblio.utilitaires.DVDFactoryBeta;
 import biblio.utilitaires.LivreFactory;
 import biblio.utilitaires.LivreFactoryBeta;
+import biblio.utilitaires.comparators.OuvrageComparator;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -131,57 +132,47 @@ public class Gestion {
 
     public void ajoutAuteur() {
         // créer auteur
-        int cpt_auteur = 1;
-        String rep;
+        System.out.println("ENCODAGE AUTEUR ");
+        System.out.println("Entrez le nom de l'auteur : ");
+        String nom = sc.nextLine();
+
+        System.out.println("Prénom : ");
+        String prenom = sc.nextLine();
+
+        System.out.println("Nationalité : ");
+        String nationalite = sc.nextLine();
+
+        Auteur a = new Auteur(nom, prenom, nationalite);
+        List<Auteur> listAuteur = new ArrayList<>();
+        listAuteur.add(a);
+
+        System.out.println("Auteur créé ");
+
+        System.out.println(listAuteur);
+
+        //TODO attribuer ouvrages par boucle
+        // les ouvrages sont triés par ordre de titre
+        // ne pas proposer un ouvrage déjà présent dans la liste des ouvrages de cet auteur
+        List<Ouvrage> listOuvrage2 = new ArrayList<>(listOuvrage);
+        Iterator<Ouvrage> iteratorListOuvrage = listOuvrage2.iterator();
+
+        while (iteratorListOuvrage.hasNext()) {
+            if (a.getListOuvrage().contains(iteratorListOuvrage.next())) iteratorListOuvrage.remove();
+        }
+
+        listOuvrage2.sort(new OuvrageComparator());
+
         do {
-            System.out.println("ENCODAGE AUTEUR " + cpt_auteur);
-            System.out.println("Entrez le nom de l'auteur : ");
-            String nom = sc.nextLine();
+            int choix = choixListe(listOuvrage2);
 
-            System.out.println("Prénom : ");
-            String prenom = sc.nextLine();
+            if (choix == 0) break;
+            a.addOuvrage(listOuvrage2.get(choix - 1));
 
-            System.out.println("Nationalité : ");
-            String nationalite = sc.nextLine();
+            System.out.println("Ouvrage ajouté");
+            listOuvrage2.remove(choix - 1);
 
-            Auteur a = new Auteur(nom, prenom, nationalite);
-            List<Auteur> listAuteur = new ArrayList<>();
-            listAuteur.add(a);
+        } while (true);
 
-            System.out.println("Auteur " + cpt_auteur + " créé ");
-            cpt_auteur++;
-
-            int choix = choixListe(listOuvrage);
-            a.addOuvrage(listOuvrage.get(choix - 1));
-            //TODO attribuer ouvrages par boucle
-            // les ouvrages sont triés par ordre de titre
-            // ne pas proposer un ouvrage déjà présent dans la liste des ouvrages de cet auteur
-            String autreOuvrage;
-            do {
-                System.out.println("Voulez-vous attribuer un autre ouvrage à cet auteur (o/n) ?");
-                autreOuvrage = sc.nextLine();
-
-                if (autreOuvrage.equals("o")) {
-                    System.out.println("Choix d'un autre ouvrage : ");
-                    choix = choixListe(listOuvrage);
-                    Ouvrage o = listOuvrage.get(choix - 1);
-
-                    /* Vérification si l'ouvrage n'est pas déjà attribué à cet auteur */
-                    if (!a.getListOuvrage().contains(o)) {
-                        a.addOuvrage(o);
-                        System.out.println("Ouvrage attribué à l'auteur avec succès.");
-                    } else {
-                        System.out.println("Cet ouvrage ne peut pas être attribué à cet auteur.");
-                    }
-                }
-            } while (autreOuvrage.equals("o"));
-
-            System.out.println(listAuteur);
-
-            System.out.println("Voulez-vous encoder un autre auteur (o/n) ? ");
-            rep = sc.nextLine();
-
-        } while (rep.equals("o"));
     }
 
     public void ajoutOuvrage() {
@@ -275,6 +266,7 @@ public class Gestion {
         List<TypeOuvrage> listTypeOuvrage = new ArrayList<>(Arrays.asList(typeOuvrages));
 
         int choix = choixListe(listTypeOuvrage);
+        if (choix == 0) return;
 
         Ouvrage o = null;
         switch (choix) {
@@ -457,7 +449,7 @@ public class Gestion {
         }
 
         int choix = choixListe(listExemplairesEnLocation);
-        Exemplaire e = listExemplairesEnLocation.get(choix-1);
+        Exemplaire e = listExemplairesEnLocation.get(choix - 1);
 
         /* Enregistrer la restitution */
 
