@@ -1,14 +1,12 @@
 package biblio.metier;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Lecteur {
-    private static int numact=1;
+    private static int numact = 1;
     private int numlecteur;
-    private  String nom,prenom;
+    private String nom, prenom;
     private LocalDate dn;
     private String adresse;
     private String mail;
@@ -120,13 +118,13 @@ public class Lecteur {
     }
 
     /* METHODES */
-    public List<Exemplaire> listerExemplairesEnLocationLecteur(){
+    public List<Exemplaire> listerExemplairesEnLocationLecteur() {
         // lister exemplaires en location lecteur
         List<Exemplaire> listExemplaireLocation = new ArrayList<>();
 
-        if (listLocation != null){
-            for (Location l : listLocation){
-                if (l.getDateRestitution() == null){
+        if (listLocation != null) {
+            for (Location l : listLocation) {
+                if (l.getDateRestitution() == null) {
                     listExemplaireLocation.add(l.getExemplaire());
                 }
             }
@@ -135,13 +133,18 @@ public class Lecteur {
         return listExemplaireLocation;
     }
 
-    public List<Exemplaire> listerExemplairesLouesLecteur(){
+    public List<Exemplaire> listerExemplairesLouesLecteur() {
         // lister exemplaires loues lecteur
         List<Exemplaire> listExemplaireLoues = new ArrayList<>();
 
-        for (Location l : listLocation){
+        for (Location l : listLocation) {
+            listExemplaireLoues.add(l.getExemplaire());
+            //TODO empêcher doublon si exemplaire loué plusieurs fois par même lecteur
+            Set<Exemplaire> listSetExemplaire = new HashSet<>();
+            if (!listSetExemplaire.contains(l.getExemplaire())){ /* Vérification si l'exemplaire est déjà à la liste */
                 listExemplaireLoues.add(l.getExemplaire());
-                //TODO empêcher doublon si exemplaire loué plusieurs fois par même lecteur
+                listSetExemplaire.add(l.getExemplaire()); /* Ajout de l'exemplaire à la liste pour éviter les doublons */
+            }
         }
 
         return listExemplaireLoues;

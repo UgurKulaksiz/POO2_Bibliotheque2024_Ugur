@@ -5,7 +5,7 @@ import biblio.utilitaires.CDFactoryBeta;
 import biblio.utilitaires.DVDFactoryBeta;
 import biblio.utilitaires.LivreFactory;
 import biblio.utilitaires.LivreFactoryBeta;
-import biblio.utilitaires.comparators.OuvrageComparator;
+import biblio.utilitaires.comparators.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -150,7 +150,7 @@ public class Gestion {
 
         System.out.println(listAuteur);
 
-        //TODO attribuer ouvrages par boucle
+        // attribuer ouvrages par boucle
         // les ouvrages sont triés par ordre de titre
         // ne pas proposer un ouvrage déjà présent dans la liste des ouvrages de cet auteur
         List<Ouvrage> listOuvrage2 = new ArrayList<>(listOuvrage);
@@ -165,7 +165,7 @@ public class Gestion {
         do {
             int choix = choixListe(listOuvrage2);
 
-            if (choix == 0) break;
+            if (choix == 0) break; /* Permet d'arrêter de parcourir (choisir) dans la liste Ouvrage */
             a.addOuvrage(listOuvrage2.get(choix - 1));
 
             System.out.println("Ouvrage ajouté");
@@ -286,34 +286,24 @@ public class Gestion {
         choix = choixListe(listOuvrage);
         o.addAuteur(listAuteur.get(choix - 1));
 
-        //TODO attribuer auteurs par boucle, les auteur sont triés par ordre de nom et prénom,
+        // attribuer auteurs par boucle, les auteur sont triés par ordre de nom et prénom,
         // ne pas proposer un auteur déjà présent dans la liste des auteurs de cet ouvrage
-        int choixAuteur;
-        String autreAuteur;
+        List<Auteur> listAuteur2 = new ArrayList<>(listAuteur);
+        Iterator<Auteur> iteratorListAuteur = listAuteur2.iterator();
+
+        while (iteratorListAuteur.hasNext()) {
+            if (o.getListAuteur().contains(iteratorListAuteur.hasNext())) iteratorListAuteur.remove();
+        }
+
+        listAuteur2.sort(new AuteurComparator());
         do {
-            System.out.println("Voulez-vous attribuer un autre auteur à cet ouvrage (o/n) ? ");
-            autreAuteur = sc.nextLine();
+            choix = choixListe(listAuteur2);
 
-            if (autreAuteur.equals("o")) {
-                int i = 0;
-                for (Auteur a : listAuteur) {
-                    System.out.println(i + 1 + ". " + a.getNom() + " " + a.getPrenom());
-                }
-                System.out.println("Choix d'un autre auteur : ");
-                choixAuteur = sc.nextInt();
-
-                Auteur aChoisi = listAuteur.get(choixAuteur - 1);
-
-                /* Vérification si l'auteur n'est pas déjà attribué à cet ouvrage */
-                if (!o.getListAuteur().contains(aChoisi)) {
-                    o.addAuteur(aChoisi);
-                    System.out.println("Auteur attribué à l'ouvrage avec succès.");
-                } else {
-                    System.out.println("Cet auteur est déjà été attribué à cet ouvrage.");
-                }
-
-            }
-        } while (autreAuteur.equals("o"));
+            if (choix == 0) break; /* Permet d'arrêter de parcourir (choisir) dans la liste Auteur */
+            o.addAuteur(listAuteur2.get(choix - 1));
+            listAuteur2.remove(choix - 1);
+            System.out.println("Auteur ajouté");
+        } while (true);
 
     }
 
@@ -351,28 +341,25 @@ public class Gestion {
         listRayon.add(r);
         System.out.println("Rayon créé");
 
-        //TODO attribuer par une boucle plusieurs exemplaires, les exemplaires sont triés par ordre de titre de l'ouvrage ,
+        // attribuer par une boucle plusieurs exemplaires, les exemplaires sont triés par ordre de titre de l'ouvrage ,
         //  ne proposer que les exemplaires qui ne sont pas dans déjà présents dans ce rayon et qui ne sont dans aucun autre rayon
-        String autreExemplaire;
+        List<Exemplaire> listExemplaire2 = new ArrayList<>(listExemplaire);
+        Iterator<Exemplaire> iteratorListExemplaire = listExemplaire2.iterator();
+
+        while (iteratorListExemplaire.hasNext()) {
+            Rayon ray = iteratorListExemplaire.next().getRayon();
+
+            if (r.equals(ray)) iteratorListExemplaire.remove();
+        }
+
+        listExemplaire2.sort(new ExemplaireTitreComparator());
         do {
-            System.out.println("Voulez-vous attribuer un autre exemplaire à ce rayon (o/n) ? ");
-            autreExemplaire = sc.nextLine();
-
-            int choix = choixListe(listExemplaire);
-            /* r.addExemplaire(listExemplaire.get(choix - 1)); */
-            Exemplaire eChoisi = listExemplaire.get(choix - 1);
-
-            /* Vérification si l'exemplaire n'est pas déjà dans ce rayon et n'est dans aucun autre rayon */
-            if (!r.getListExemplaire().contains(eChoisi) && eChoisi.getRayon() == null) {
-                r.addExemplaire(eChoisi);
-                eChoisi.setRayon(r);
-
-                System.out.println("Exemplaire attrbiué avec succès au rayon " + r.getCodeRayon());
-            } else {
-                System.out.println("Cet exemplaire est déjà été attribué à un rayon ou est déjà présent dans ce rayon " + r.getCodeRayon());
-            }
-
-        } while (autreExemplaire.equals("o"));
+            int choix = choixListe(listExemplaire2);
+            if (choix == 0) break; /* Permet d'arrêter de parcourir (choisir) dans la liste Exemplaire */
+            r.addExemplaire(listExemplaire.get(choix - 1));
+            System.out.println("Exemplaire ajouté");
+            listExemplaire2.remove(choix - 1);
+        } while (true);
     }
 
     public void ajoutExemplaire() {
@@ -388,15 +375,15 @@ public class Gestion {
 
         Exemplaire e = new Exemplaire(matricule, descriptionEtat, listOuvrage.get(choix - 1));
         listExemplaire.add(e);
-
         System.out.println("Exemplaire de l'ouvrage a été créé avec succés");
 
         // attribuer rayon
-        //TODO attribuer un rayon ==> c'est fait  , nouveauté : les rayons sont triès par ordre de code
+        // attribuer un rayon ==> c'est fait  , nouveauté : les rayons sont triès par ordre de code
         System.out.println("Attribuer un rayon à cet exemplaire");
-        listRayon.sort(Comparator.comparing(Rayon::getCodeRayon));
+        listRayon.sort(new RayonComparator());
         System.out.println("Liste des rayons est trié par ordre de code");
         int choixRayon = choixListe(listRayon);
+        if (choix == 0) return;
         Rayon r = listRayon.get(choixRayon - 1);
         e.setRayon(r);
 
@@ -406,26 +393,26 @@ public class Gestion {
 
     public void ajoutLocation() {
         // lister exemplaires,lister lecteurs,créer la location avec le constructeur à deux paramètres(loueur,exemplaire)
-        //TODO ne lister que les exemplaires libres et les trier par matricule
-        int choix = choixListe(listExemplaire);
+        // ne lister que les exemplaires libres et les trier par matricule
+        int choix;
+        List<Exemplaire> listExemplaire2 = new ArrayList<>(listExemplaire);
+        Iterator<Exemplaire> iteratorListExemplaire = listExemplaire2.iterator();
 
-        if (listExemplaire.get(choix).enLocation()) {
-            System.out.println("Exemplaire est en location ");
-            return;
-        } else {
-            System.out.println("Exemplaire disponible pour la location (trié par matricule)");
-            listExemplaire.sort(Comparator.comparing(Exemplaire::getMatricule));
-            for (int i = 0; i < listExemplaire.size(); i++) {
-                System.out.println(i + 1 + ". " + listExemplaire.get(i).getMatricule());
-            }
+        while (iteratorListExemplaire.hasNext()) {
+            if (iteratorListExemplaire.next().enLocation())
+                iteratorListExemplaire.remove();
         }
 
-        Exemplaire ex = listExemplaire.get(choix - 1);
+        listExemplaire2.sort(new ExemplaireMatriculeComparator());
+        choix = choixListe(listExemplaire2);
+        if (choix == 0) return;
+        Exemplaire e = listExemplaire2.get(choix - 1);
 
         choix = choixListe(listLecteur);
-        Lecteur lec = listLecteur.get(choix - 1);
+        if (choix == 0) return;
+        Lecteur l = listLecteur.get(choix - 1);
 
-        listLocation.add(new Location(lec, ex));
+        listLocation.add(new Location(l, e));
     }
 
     private void gestRestitution() {
