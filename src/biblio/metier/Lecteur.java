@@ -12,7 +12,13 @@ public class Lecteur {
     private String mail;
     private String tel;
 
-    private List<Location> listLocation = new ArrayList<>();
+    /* Enoncé V2 :
+        d)Ôtez de la classe Lecteur la liste de ses locations ainsi que le méthodes suivantes : public List<Location> getLloc() {
+            public void setLloc(List<Location> lloc) {
+            public List<Exemplaire> listerExemplairesEnLocation(){
+            public List<Exemplaire> listerExemplairesLoues(){
+     */
+    /* private List<Location> listLocation = new ArrayList<>(); */
 
     public Lecteur() {
     }
@@ -83,6 +89,7 @@ public class Lecteur {
         this.tel = tel;
     }
 
+    /*
     public List<Location> getListLocation() {
         return listLocation;
     }
@@ -90,6 +97,7 @@ public class Lecteur {
     public void setLloc(List<Location> listLocation) {
         this.listLocation = listLocation;
     }
+     */
 
     @Override
     public boolean equals(Object o) {
@@ -118,6 +126,7 @@ public class Lecteur {
     }
 
     /* METHODES */
+    /*
     public List<Exemplaire> listerExemplairesEnLocationLecteur() {
         // lister exemplaires en location lecteur
         List<Exemplaire> listExemplaireLocation = new ArrayList<>();
@@ -141,13 +150,14 @@ public class Lecteur {
             listExemplaireLoues.add(l.getExemplaire());
             //TODO empêcher doublon si exemplaire loué plusieurs fois par même lecteur
             Set<Exemplaire> listSetExemplaire = new HashSet<>();
-            if (!listSetExemplaire.contains(l.getExemplaire())){ /* Vérification si l'exemplaire est déjà à la liste */
+            if (!listSetExemplaire.contains(l.getExemplaire())){ /* Vérification si l'exemplaire est déjà à la liste
                 listExemplaireLoues.add(l.getExemplaire());
-                listSetExemplaire.add(l.getExemplaire()); /* Ajout de l'exemplaire à la liste pour éviter les doublons */
+                listSetExemplaire.add(l.getExemplaire()); /* Ajout de l'exemplaire à la liste pour éviter les doublons
             }
         }
 
         return listExemplaireLoues;
     }
+    */
 
 }

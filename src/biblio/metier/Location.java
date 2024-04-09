@@ -1,3 +1,4 @@
+/*
 package biblio.metier;
 
 import java.time.LocalDate;
@@ -82,7 +83,10 @@ public class Location {
                 '}';
     }
 
+ */
+
     /* METHODES */
+/*
     public double calculerAmende() {
         // calcul amende location sur base dote restitution : la durée du prêt est de 15 jours pour les livres, 3 jours pour les DVD et 7 jours pour les CD
         if (dateRestitution != null) {
@@ -98,6 +102,7 @@ public class Location {
     }
 
     /* Demander explication au prof cette méthode */
+/*
     public void enregistrerRetour() {
         // enregistrer retour => la date de restitution devient égale à la date actuelle
         List<Location> listLocationRetour = new ArrayList<>();
@@ -105,9 +110,11 @@ public class Location {
         for (Location l : exemplaire.getListLocation()) {
             if (l.getDateRestitution() != null && l.getDateRestitution().isEqual(LocalDate.now())) {
                 l.setDateRestitution(LocalDate.now()); /* MàJ de la date de restitution */
+/*
                 listLocationRetour.add(l);
             }
         }
     }
 
 }
+*/
