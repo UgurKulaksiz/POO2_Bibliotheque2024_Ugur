@@ -96,7 +96,7 @@ public class Exemplaire {
 
     public Lecteur lecteurActuelExemplaire() {
         // lecteur actuel exemplaire
-        /* c)Modifiez les méthodes suivantes afin qu'elles exploitent la hashMap ci-dessus -> public Lecteur lecteurActuel() */
+        /* Enoncé V2 : c)Modifiez les méthodes suivantes afin qu'elles exploitent la hashMap ci-dessus -> public Lecteur lecteurActuel() */
         return listLocation.get(this);
 
         /*
@@ -175,7 +175,7 @@ public class Exemplaire {
 
     public boolean enLocation() {
         // en location exemplaires
-        /* c)Modifiez les méthodes suivantes afin qu'elles exploitent la hashMap ci-dessus -> public boolean enLocation() */
+        /* Enoncé V2 : c)Modifiez les méthodes suivantes afin qu'elles exploitent la hashMap ci-dessus -> public boolean enLocation() */
         return listLocation.containsKey(this);
 
         /*
