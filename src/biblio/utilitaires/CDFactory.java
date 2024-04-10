@@ -7,13 +7,18 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class CDFactory extends OuvrageFactory {
-    @Override
-    public Ouvrage addDetailOuvrage(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre) {
+    protected  long code;
+    protected  byte nbrePlages;
+    protected LocalTime dureeTotale;
+
+
+    public Ouvrage create() {
         System.out.println("Code : ");
-        long code = sc.nextLong();
-        System.out.println("Nombre de plages :");
-        byte nbrePlages = sc.nextByte();
-        LocalTime dureeTotale = Utilitaire.lecTime();
+        code = sc.nextLong();
+        System.out.println("Nombre de plages : ");
+        nbrePlages = sc.nextByte();
+        System.out.println("Durée totale : ");
+        dureeTotale = Utilitaire.lecTime();
 
         CD cd = new CD(titre, ageMin, dateParution, prixLocation, langue, genre, code, nbrePlages, dureeTotale);
         return cd;

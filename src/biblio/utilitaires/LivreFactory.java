@@ -10,24 +10,30 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LivreFactory extends OuvrageFactory {
-    @Override
-    public Ouvrage addDetailOuvrage(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre) {
+    protected String isbn;
+    protected int nbrePages;
+    protected TypeLivre tl;
+    protected String resume;
+
+    public Ouvrage create(){
+        super.base();
         System.out.println("ISBN : ");
-        String isbn = sc.next();
+        isbn = sc.next();
         System.out.println("Pages : ");
-        int nbrePages = sc.nextInt();
+        nbrePages = sc.nextInt();
         sc.skip("\n");
 
-        TypeLivre[] typeLivre = TypeLivre.values();
-        List<TypeLivre> listTypeLivre = new ArrayList<>(Arrays.asList(typeLivre));
+        TypeLivre[] ttl = TypeLivre.values();
+        List<TypeLivre> ltl = new ArrayList<>(Arrays.asList(ttl));
 
-        int choix = Utilitaire.choixListe(listTypeLivre);
-        TypeLivre tl = typeLivre[choix - 1];
+        int choix = Utilitaire.choixListe(ltl);
+        tl = ttl[choix-1];
 
         System.out.println("Résumé du livre :");
-        String resume = sc.nextLine();
+        resume = sc.nextLine();
 
-        Livre l = new Livre(titre, ageMin, dateParution, prixLocation, langue, genre, isbn, nbrePages, tl, resume);
+        Livre l=new Livre(titre,ageMin,dateParution,prixLocation,langue,genre,isbn,nbrePages,tl,resume);
+
         return l;
     }
 }

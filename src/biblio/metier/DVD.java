@@ -11,10 +11,6 @@ public class DVD extends Ouvrage {
     private long code;
     private LocalTime dureeTotale;
     private byte nbreBonus;
-    /*
-    private List<String> autresLangues = new ArrayList<>();
-    private List<String> sousTitres = new ArrayList<>();
-     */
 
     private Set<String> autresLangues = new HashSet<>();
     private Set<String> sousTitres = new HashSet<>();

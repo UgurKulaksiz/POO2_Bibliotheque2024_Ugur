@@ -10,13 +10,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DVDFactory extends OuvrageFactory {
-    @Override
-    public Ouvrage addDetailOuvrage(String titre, int ageMin, LocalDate dateParution, double prixLocation, String langue, String genre) {
+    protected long code;
+    protected LocalTime dureeTotale;
+    protected byte nbreBonus;
+
+
+    public Ouvrage create() {
+        super.base();
+
         System.out.println("Code : ");
-        long code = sc.nextLong();
+        code = sc.nextLong();
         System.out.println("Durée totale : ");
-        LocalTime dureeTotale = Utilitaire.lecTime();
-        byte nbreBonus = sc.nextByte();
+        dureeTotale = Utilitaire.lecTime();
+        nbreBonus = sc.nextByte();
 
         DVD dvd = new DVD(titre, ageMin, dateParution, prixLocation, langue, genre, code, dureeTotale, nbreBonus);
 

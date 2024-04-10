@@ -32,6 +32,7 @@ public class CDFactoryBeta {
         long code = sc.nextLong();
         System.out.println("Nombre de plages :");
         byte nbrePlages = sc.nextByte();
+        System.out.println("Durée totale : ");
         LocalTime dureeTotale = Utilitaire.lecTime();
 
         CD cd = new CD(titre, ageMin, dateParution, prixLocation, langue, genre, code, nbrePlages, dureeTotale);

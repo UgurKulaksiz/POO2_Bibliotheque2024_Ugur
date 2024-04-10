@@ -1,10 +1,7 @@
 package biblio.gestion;
 
 import biblio.metier.*;
-import biblio.utilitaires.CDFactoryBeta;
-import biblio.utilitaires.DVDFactoryBeta;
-import biblio.utilitaires.LivreFactory;
-import biblio.utilitaires.LivreFactoryBeta;
+import biblio.utilitaires.*;
 import biblio.utilitaires.comparators.*;
 
 import java.time.LocalDate;
@@ -14,17 +11,18 @@ import java.util.*;
 import static biblio.utilitaires.Utilitaire.choixListe;
 
 
-public class Gestion {
+public class GestionOld {
     Scanner sc = new Scanner(System.in);
-    private static List<Auteur> listAuteur = new ArrayList<>();
-    private static List<Exemplaire> listExemplaire = new ArrayList<>();
-    private static List<Lecteur> listLecteur = new ArrayList<>();
-    private static List<Location> listLocation = new ArrayList<>();
-    private static List<Ouvrage> listOuvrage = new ArrayList<>();
-    private static List<Rayon> listRayon = new ArrayList<>();
+    //Ôter static pour les listes qui n'est plus nécessaire
+    private List<Auteur> listAuteur = new ArrayList<>();
+    private List<Exemplaire> listExemplaire = new ArrayList<>();
+    private List<Lecteur> listLecteur = new ArrayList<>();
+    private List<Ouvrage> listOuvrage = new ArrayList<>();
+    private List<Rayon> listRayon = new ArrayList<>();
+    public static final Map<Exemplaire, Lecteur> LOCATIONS = new HashMap(); /* Enoncé V2 */
 
     public static void main(String[] args) {
-        Gestion g = new Gestion();
+        GestionOld g = new GestionOld();
         g.populate();
         g.menu();
     }
@@ -68,23 +66,22 @@ public class Gestion {
         Lecteur lec = new Lecteur("Dupont", "Jean", LocalDate.of(2000, 1, 4), "Mons", "jean.dupont@mail.com", "0458774411");
         listLecteur.add(lec);
 
-        Location loc = new Location(LocalDate.of(2023, 2, 1), LocalDate.of(2023, 3, 1), lec, e);
-        listLocation.add(loc);
-        loc.setDateRestitution(LocalDate.of(2023, 2, 4));
+        /* Enoncé V2 */
+        LOCATIONS.put(e, lec);
 
 
         lec = new Lecteur("Durant", "Aline", LocalDate.of(1980, 10, 10), "Binche", "aline.durant@mail.com", "045874444");
         listLecteur.add(lec);
 
-        loc = new Location(LocalDate.of(2023, 2, 5), LocalDate.of(2023, 3, 5), lec, e);
-        listLocation.add(loc);
+        /* Enoncé V2 */
+        LOCATIONS.put(e, lec);
 
         System.out.println("\n" + a);
         System.out.println("\n" + l);
         System.out.println("\n" + r);
         System.out.println("\n" + e);
         System.out.println("\n" + lec);
-        System.out.println("\n" + loc);
+        System.out.println("\n" + LOCATIONS);
         System.out.println();
 
 
@@ -143,7 +140,6 @@ public class Gestion {
         String nationalite = sc.nextLine();
 
         Auteur a = new Auteur(nom, prenom, nationalite);
-        List<Auteur> listAuteur = new ArrayList<>();
         listAuteur.add(a);
 
         System.out.println("Auteur créé ");
@@ -176,92 +172,7 @@ public class Gestion {
     }
 
     public void ajoutOuvrage() {
-        /*
-        // créer ouvrages
-        Ouvrage o = null;
-
-        System.out.println("Titre : ");
-        String titre = sc.nextLine();
-        System.out.println("Âge minimum : ");
-        int ageMin = sc.nextInt();
-        sc.skip("\n");
-        System.out.println("Date de parution : ");
-        LocalDate dateParution = Utilitaire.lecDate();
-        System.out.println("Prix de location : ");
-        double prixLoc = sc.nextDouble();
-        sc.skip("\n");
-        System.out.println("Langue : ");
-        String langue = sc.nextLine();
-        System.out.println("Genre : ");
-        String genre = sc.nextLine();
-
-        TypeOuvrage[] typeO = TypeOuvrage.values();
-        List<TypeOuvrage> listTypeOuvrage = new ArrayList<>(Arrays.asList(typeO));
-        int choix = Utilitaire.choixListe(listTypeOuvrage);
-
-        switch (choix) {
-            case 1:
-                System.out.println("isbn : ");
-                String isbn = sc.next();
-                System.out.println("Pages ");
-                int nbrePages = sc.nextInt();
-                sc.skip("\n");
-
-                TypeLivre[] typeL = TypeLivre.values();
-                List<TypeLivre> ltl = new ArrayList<>(Arrays.asList(typeL));
-                choix = Utilitaire.choixListe(ltl);
-
-                TypeLivre typeLivre = typeL[choix - 1];
-                System.out.println("Résumé du livre :");
-                String resume = sc.nextLine();
-
-                o = new Livre(titre, ageMin, dateParution, prixLoc, langue, genre, isbn, nbrePages, typeLivre, resume);
-                break;
-            case 2:
-                System.out.println("Code : ");
-                long code = sc.nextLong();
-                System.out.println("Nombre de pages :");
-                byte nbrePlages = sc.nextByte();
-                LocalTime dureeTotale = Utilitaire.lecTime();
-
-                o = new CD(titre, ageMin, dateParution, prixLoc, langue, genre, code, nbrePlages, dureeTotale);
-                break;
-            case 3:
-                System.out.println("Code : ");
-                code = sc.nextLong();
-                dureeTotale = Utilitaire.lecTime();
-                byte nbreBonus = sc.nextByte();
-
-                o = new DVD(titre, ageMin, dateParution, prixLoc, langue, genre, code, dureeTotale, nbreBonus);
-
-                System.out.println("Autres langues");
-                //List<String> langues = new ArrayList<>(Arrays.asList("anglais", "français", "italien", "allemand", "fin"));
-                Set<String> langues = new HashSet<>();
-                do {
-                    String choixLangues = sc.nextLine();
-                    if (choixLangues.equals("fin")) break;
-
-                    langues.add(choixLangues);
-
-                } while (true);
-
-                ((DVD) o).setAutresLangues(langues);//TODO vérifier unicité ou utiliser set et pas de doublon avec langue d'origine
-
-                System.out.println("Sous-titres");
-                Set<String> sousTitres = new HashSet<>();
-                do {
-                    String choixSousTitres = sc.nextLine();
-                    if (choixSousTitres.equals("fin")) break;
-
-                    sousTitres.add(choixSousTitres);
-                } while (true);
-
-                ((DVD) o).setSousTitres(sousTitres);//TODO vérifier unicité ou utiliser set
-
-                break;
-        }
-
-         */
+        /* créer ouvrage */
         TypeOuvrage[] typeOuvrages = TypeOuvrage.values();
         List<TypeOuvrage> listTypeOuvrage = new ArrayList<>(Arrays.asList(typeOuvrages));
 
@@ -269,17 +180,8 @@ public class Gestion {
         if (choix == 0) return;
 
         Ouvrage o = null;
-        switch (choix) {
-            case 1:
-                o = new LivreFactoryBeta().create();
-                break;
-            case 2:
-                o = new CDFactoryBeta().create();
-                break;
-            case 3:
-                o = new DVDFactoryBeta().create();
-                break;
-        }
+        List<OuvrageFactory> listOuvrageFactory = Arrays.asList(new LivreFactory(), new CDFactory(), new DVDFactory());
+        OuvrageFactory of = listOuvrageFactory.get(choix - 1);
         listOuvrage.add(o);
         System.out.println("Ouvrage créé");
 
@@ -382,9 +284,9 @@ public class Gestion {
         System.out.println("Attribuer un rayon à cet exemplaire");
         listRayon.sort(new RayonComparator());
         System.out.println("Liste des rayons est trié par ordre de code");
-        int choixRayon = choixListe(listRayon);
+        choix = choixListe(listRayon);
         if (choix == 0) return;
-        Rayon r = listRayon.get(choixRayon - 1);
+        Rayon r = listRayon.get(choix - 1);
         e.setRayon(r);
 
         System.out.println("Rayon attribué à cet exemplaire");
@@ -412,34 +314,10 @@ public class Gestion {
         if (choix == 0) return;
         Lecteur l = listLecteur.get(choix - 1);
 
-        listLocation.add(new Location(l, e));
+        LOCATIONS.put(e, l);
     }
 
     private void gestRestitution() {
         //TODO lister exemplaires en location , choisir l'un d'entre eux, enregistrer sa restitution et éventuellement changer état
-        List<Exemplaire> listExemplairesEnLocation = new ArrayList<>();
-
-        for (Location l : listLocation) {
-            listExemplairesEnLocation.add(l.getExemplaire());
-        }
-
-        /* Vérification s'il y a des exemplaires en location */
-        if (listExemplairesEnLocation.isEmpty()) {
-            System.out.println("Aucun exemplaire n'est actuellement en location");
-            return;
-        }
-
-        /* Afficher les exemplaires en location et demander à l'utilisateur de choisir */
-        System.out.println("Exemplaires actuellement en location ");
-        for (int i = 0; i < listExemplairesEnLocation.size(); i++) {
-            System.out.println(i + 1 + ". " + listExemplairesEnLocation.get(i).getMatricule());
-        }
-
-        int choix = choixListe(listExemplairesEnLocation);
-        Exemplaire e = listExemplairesEnLocation.get(choix - 1);
-
-        /* Enregistrer la restitution */
-
-        /* Changer l'état */
     }
 }
