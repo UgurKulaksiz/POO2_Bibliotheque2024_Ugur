@@ -17,7 +17,9 @@ public class AuteurViewConsole extends AbstractViewAuteur {
     public void menu() {
         update(auteurController.getAll());
 
-        List options = Arrays.asList("Ajouter auteur", "Retirer auteur", "Rechercher auteur", "Modifier auteur", "fin");
+        System.out.println();
+
+        List options = Arrays.asList("Ajouter auteur", "Retirer auteur", "Rechercher auteur", "Modifier auteur", "Fin");
         do {
             int choix = choixListe(options);
 
@@ -40,6 +42,27 @@ public class AuteurViewConsole extends AbstractViewAuteur {
         } while (true);
     }
 
+    public void ajouter() {
+        Auteur a;
+        do {
+            try {
+                System.out.println("Nom : ");
+                String nom = sc.nextLine();
+                System.out.println("Prénom : ");
+                String prenom = sc.nextLine();
+                System.out.println("Nationalité : ");
+                String nat = sc.nextLine();
+
+                a = new Auteur(nom, prenom, nat);
+                break;
+            } catch (Exception e) {
+                System.out.println("Une erreur est survenue : " + e.getMessage());
+            }
+        } while (true);
+
+        auteurController.add(a);
+    }
+
     private void retirer() {
         int choix = choixEltInt(listAuteur) - 1;
 
@@ -49,11 +72,6 @@ public class AuteurViewConsole extends AbstractViewAuteur {
         if (ok) affMsg("Client effacé");
         else affMsg("Client non effacé");
     }
-
-    private void affMsg(String msg) {
-        System.out.println(msg);
-    }
-
 
     public void rechercher() {
         try {
@@ -79,8 +97,9 @@ public class AuteurViewConsole extends AbstractViewAuteur {
 
     }
 
-
     public void modifier() {
+        System.out.println("\n" + listAuteur);
+
         int choix = choixEltInt(listAuteur);
         Auteur a = listAuteur.get(choix - 1);
 
@@ -103,27 +122,10 @@ public class AuteurViewConsole extends AbstractViewAuteur {
         auteurController.update(a); /* Mise à jour de l'auteur choisi */
     }
 
-
-    public void ajouter() {
-        Auteur a;
-        do {
-            try {
-                System.out.println("Nom : ");
-                String nom = sc.nextLine();
-                System.out.println("Prénom : ");
-                String prenom = sc.nextLine();
-                System.out.println("Nationalité : ");
-                String nat = sc.nextLine();
-
-                a = new Auteur(nom, prenom, nat);
-                break;
-            } catch (Exception e) {
-                System.out.println("Une erreur est survenue : " + e.getMessage());
-            }
-        } while (true);
-
-        auteurController.add(a);
+    private void affMsg(String msg) {
+        System.out.println(msg);
     }
+
 
     public void special(Auteur a) {
 
