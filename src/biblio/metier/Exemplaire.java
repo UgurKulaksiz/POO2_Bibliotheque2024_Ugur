@@ -19,6 +19,15 @@ public class Exemplaire {
     public Exemplaire() {
     }
 
+    public Exemplaire(String matricule) {
+        this.matricule = matricule;
+    }
+
+    public Exemplaire(String matricule, String descriptionEtat) {
+        this.matricule = matricule;
+        this.descriptionEtat = descriptionEtat;
+    }
+
     public Exemplaire(String matricule, String descriptionEtat, Ouvrage ouvrage) {
         this.matricule = matricule;
         this.descriptionEtat = descriptionEtat;

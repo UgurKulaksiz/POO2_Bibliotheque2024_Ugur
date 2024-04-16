@@ -17,7 +17,7 @@ public class AuteurController {
     public AuteurController(DAOAuteur modelAuteur, AbstractViewAuteur viewAuteur) {
         this.modelAuteur = modelAuteur;
         this.viewAuteur = viewAuteur;
-        this.viewAuteur.setController(this); /* Méthode setController() -> Voir classe 'AbstractViexAuteur' */
+        this.viewAuteur.setController(this); /* Méthode setController() -> Voir classe 'AbstractViewAuteur' */
     }
 
     public List<Auteur> getAll() {
