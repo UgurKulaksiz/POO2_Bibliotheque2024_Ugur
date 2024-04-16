@@ -14,6 +14,7 @@ public abstract class AbstractViewExemplaire implements Observer {
         this.exemplaireController = exemplaireController;
     }
 
+
     public abstract void menu();
 
     public abstract void affList(List listExemplaire);

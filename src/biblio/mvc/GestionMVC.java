@@ -2,18 +2,15 @@ package biblio.mvc;
 
 import biblio.metier.Auteur;
 import biblio.metier.Exemplaire;
+import biblio.metier.Lecteur;
 import biblio.mvc.controller.AuteurController;
 import biblio.mvc.controller.ExemplaireController;
-import biblio.mvc.model.AuteurModel;
-import biblio.mvc.model.DAOAuteur;
-import biblio.mvc.model.DAOExemplaire;
-import biblio.mvc.model.ExemplaireModel;
-import biblio.mvc.view.AbstractViewAuteur;
-import biblio.mvc.view.AbstractViewExemplaire;
-import biblio.mvc.view.AuteurViewConsole;
-import biblio.mvc.view.ExemplaireViewConsole;
+import biblio.mvc.controller.LecteurController;
+import biblio.mvc.model.*;
+import biblio.mvc.view.*;
 import biblio.utilitaires.Utilitaire;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,6 +23,10 @@ public class GestionMVC {
     private AbstractViewExemplaire abViewExemplaire;
     private ExemplaireController controllerExemplaire;
 
+    private DAOLecteur modelLecteur;
+    private AbstractViewLecteur abViewLecteur;
+    private LecteurController controllerLecteur;
+
     public void gestion() {
         modelAuteur = new AuteurModel();
         abViewAuteur = new AuteurViewConsole();
@@ -34,6 +35,10 @@ public class GestionMVC {
         modelExemplaire = new ExemplaireModel();
         abViewExemplaire = new ExemplaireViewConsole();
         controllerExemplaire = new ExemplaireController(modelExemplaire, abViewExemplaire);
+
+        modelLecteur = new LecteurModel();
+        abViewLecteur = new LecteurViewConsole();
+        controllerLecteur = new LecteurController(modelLecteur, abViewLecteur);
 
         modelAuteur.addObserver(abViewAuteur);
         modelExemplaire.addObserver(abViewExemplaire);
@@ -46,7 +51,7 @@ public class GestionMVC {
             System.exit(1);
         }
 
-        List<String> listOptions = Arrays.asList("Auteurs", "Exemplaires", "Fin");
+        List<String> listOptions = Arrays.asList("Auteurs", "Exemplaires", "Lecteur", "Fin");
         do {
             int choix = Utilitaire.choixListe(listOptions);
             switch (choix) {
@@ -55,7 +60,11 @@ public class GestionMVC {
                     break;
                 case 2:
                     abViewExemplaire.menu();
+                    break;
                 case 3:
+                    abViewLecteur.menu();
+                    break;
+                case 4:
                     System.exit(0);
             }
         } while (true);
@@ -76,6 +85,9 @@ public class GestionMVC {
 
         e = new Exemplaire("b50", "état neuf");
         modelExemplaire.getAll().add(e);
+
+        Lecteur l = new Lecteur("Dupont", "Louis", LocalDate.of(2000, 5, 12), "La Louvière", "louis.dupont@gmail.com", "0485152535");
+        modelLecteur.getAll().add(l);
     }
 
     public static void main(String[] args) {
