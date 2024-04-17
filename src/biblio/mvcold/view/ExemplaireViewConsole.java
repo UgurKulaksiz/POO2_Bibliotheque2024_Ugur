@@ -1,4 +1,4 @@
-package biblio.mvc.view;
+package biblio.mvcold.view;
 
 import biblio.metier.Exemplaire;
 
@@ -14,7 +14,7 @@ public class ExemplaireViewConsole extends AbstractViewExemplaire{
 
     @Override
     public void menu() {
-        update(exemplaireController.getAll());
+        update(controllerExemplaire.getAll());
 
         System.out.println();
 
@@ -57,14 +57,14 @@ public class ExemplaireViewConsole extends AbstractViewExemplaire{
             }
         } while (true);
 
-        exemplaireController.add(ex);
+        controllerExemplaire.add(ex);
     }
 
     private void retirerExemplaire() {
         int choix = choixEltInt(listExemplaire) - 1;
 
         Exemplaire e = listExemplaire.get(choix);
-        boolean ok = exemplaireController.remove(e);
+        boolean ok = controllerExemplaire.remove(e);
 
         if (ok) affMsg("Exemplaire effacé");
         else affMsg("Exemplaire non effacé");
@@ -77,7 +77,7 @@ public class ExemplaireViewConsole extends AbstractViewExemplaire{
 
             Exemplaire rechExemplaire = new Exemplaire(matricule);
 
-            Exemplaire ex = exemplaireController.search(rechExemplaire);
+            Exemplaire ex = controllerExemplaire.search(rechExemplaire);
             if (ex == null) affMsg("Exemplaire inconnu");
             else {
                 affMsg(ex.toString());
@@ -109,7 +109,7 @@ public class ExemplaireViewConsole extends AbstractViewExemplaire{
             }
         } while (true);
 
-        exemplaireController.update(ex); /* Mise à jour de l'exemplaire choisi */
+        controllerExemplaire.update(ex); /* Mise à jour de l'exemplaire choisi */
     }
 
     private void affMsg(String msg) {

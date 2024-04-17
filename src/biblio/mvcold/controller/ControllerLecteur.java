@@ -1,16 +1,16 @@
-package biblio.mvc.controller;
+package biblio.mvcold.controller;
 
 import biblio.metier.Lecteur;
-import biblio.mvc.model.DAOLecteur;
-import biblio.mvc.view.AbstractViewLecteur;
+import biblio.mvcold.model.DAOLecteur;
+import biblio.mvcold.view.AbstractViewLecteur;
 
 import java.util.List;
 
-public class LecteurController {
+public class ControllerLecteur {
     protected DAOLecteur modelLecteur;
     protected AbstractViewLecteur viewLecteur;
 
-    public LecteurController(DAOLecteur modelLecteur, AbstractViewLecteur viewLecteur) {
+    public ControllerLecteur(DAOLecteur modelLecteur, AbstractViewLecteur viewLecteur) {
         this.modelLecteur = modelLecteur;
         this.viewLecteur = viewLecteur;
         this.viewLecteur.setController(this); /* Méthode setController() -> Voir classe 'AbstractViewLecteur' */

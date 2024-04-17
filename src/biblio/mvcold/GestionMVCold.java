@@ -1,47 +1,56 @@
-package biblio.mvc;
+package biblio.mvcold;
 
 import biblio.metier.Auteur;
 import biblio.metier.Exemplaire;
 import biblio.metier.Lecteur;
-import biblio.mvc.controller.AuteurController;
-import biblio.mvc.controller.ExemplaireController;
-import biblio.mvc.controller.LecteurController;
-import biblio.mvc.model.*;
-import biblio.mvc.view.*;
+import biblio.metier.Rayon;
+import biblio.mvcold.controller.*;
+import biblio.mvcold.model.*;
+import biblio.mvcold.view.*;
 import biblio.utilitaires.Utilitaire;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-public class GestionMVC {
-    private DAOAuteur modelAuteur;
-    private AbstractViewAuteur abViewAuteur;
-    private AuteurController controllerAuteur;
+public class GestionMVCold {
+    private DAO<Auteur> modelAuteur;
+    private AbstractView<Auteur> abViewAuteur;
+    private Controller<Auteur> controllerAuteur;
 
-    private DAOExemplaire modelExemplaire;
-    private AbstractViewExemplaire abViewExemplaire;
-    private ExemplaireController controllerExemplaire;
+    private DAO<Exemplaire> modelExemplaire;
+    private AbstractView<Exemplaire> abViewExemplaire;
+    private Controller<Exemplaire> controllerExemplaire;
 
-    private DAOLecteur modelLecteur;
-    private AbstractViewLecteur abViewLecteur;
-    private LecteurController controllerLecteur;
+    private DAO<Lecteur> modelLecteur;
+    private AbstractView<Lecteur> abViewLecteur;
+    private Controller<Lecteur> controllerLecteur;
+
+    private DAO<Rayon> modelRayon;
+    private AbstractView<Rayon> abViewRayon;
+    private Controller<Rayon> controllerRayon;
 
     public void gestion() {
-        modelAuteur = new AuteurModel();
+        modelAuteur = new ModelAuteur();
         abViewAuteur = new AuteurViewConsole();
-        controllerAuteur = new AuteurController(modelAuteur, abViewAuteur);//création et injection de dépendance
+        controllerAuteur = new Controller<>(modelAuteur, abViewAuteur);//création et injection de dépendance
 
-        modelExemplaire = new ExemplaireModel();
+        modelExemplaire = new ModelExemplaire();
         abViewExemplaire = new ExemplaireViewConsole();
-        controllerExemplaire = new ExemplaireController(modelExemplaire, abViewExemplaire);
+        controllerExemplaire = new Controller<>(modelExemplaire, abViewExemplaire);
 
-        modelLecteur = new LecteurModel();
+        modelLecteur = new ModelLecteur();
         abViewLecteur = new LecteurViewConsole();
-        controllerLecteur = new LecteurController(modelLecteur, abViewLecteur);
+        controllerLecteur = new Controller<>(modelLecteur, abViewLecteur);
+
+        modelRayon = new ModelRayon();
+        abViewRayon = new RayonViewConsole();
+        controllerRayon = new Controller<>(modelRayon, abViewRayon);
 
         modelAuteur.addObserver(abViewAuteur);
         modelExemplaire.addObserver(abViewExemplaire);
+        modelLecteur.addObserver(abViewLecteur);
+        modelRayon.addObserver(abViewRayon);
 
         try {
             populate();
@@ -51,7 +60,7 @@ public class GestionMVC {
             System.exit(1);
         }
 
-        List<String> listOptions = Arrays.asList("Auteurs", "Exemplaires", "Lecteur", "Fin");
+        List<String> listOptions = Arrays.asList("Auteurs", "Exemplaires", "Lecteur", "Rayon", "Fin");
         do {
             int choix = Utilitaire.choixListe(listOptions);
             switch (choix) {
@@ -65,6 +74,9 @@ public class GestionMVC {
                     abViewLecteur.menu();
                     break;
                 case 4:
+                    abViewRayon.menu();
+                    break;
+                case 5:
                     System.exit(0);
             }
         } while (true);
@@ -88,10 +100,16 @@ public class GestionMVC {
 
         Lecteur l = new Lecteur("Dupont", "Louis", LocalDate.of(2000, 5, 12), "La Louvière", "louis.dupont@gmail.com", "0485152535");
         modelLecteur.getAll().add(l);
+
+        Rayon r = new Rayon("r12", "aventure");
+        modelRayon.add(r);
+
+        r = new Rayon("a70", "documentaire");
+        modelRayon.add(r);
     }
 
     public static void main(String[] args) {
-        GestionMVC gMVC = new GestionMVC();
+        GestionMVCold gMVC = new GestionMVCold();
         gMVC.gestion();
     }
 }

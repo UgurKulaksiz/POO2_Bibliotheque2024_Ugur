@@ -1,12 +1,11 @@
-package biblio.mvc.model;
+package biblio.mvcold.model;
 
-import biblio.metier.Auteur;
 import biblio.metier.Exemplaire;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExemplaireModel extends DAOExemplaire{
+public class ModelExemplaire extends DAO<Exemplaire>{
     private List<Exemplaire> listExemplaireDatas = new ArrayList<>();
 
     @Override

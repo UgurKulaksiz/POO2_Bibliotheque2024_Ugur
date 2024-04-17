@@ -39,6 +39,9 @@ public class Rayon {
     public void setListExemplaire(Set<Exemplaire> listExemplaire) {
         this.listExemplaire = listExemplaire;
     }
+    public Set<Exemplaire>listerExemplaires(){
+        return listExemplaire;
+    }
 
     @Override
     public boolean equals(Object o) {

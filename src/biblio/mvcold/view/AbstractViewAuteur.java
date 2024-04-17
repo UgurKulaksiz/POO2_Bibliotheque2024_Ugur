@@ -1,17 +1,17 @@
-package biblio.mvc.view;
+package biblio.mvcold.view;
 
 import biblio.metier.Auteur;
-import biblio.mvc.controller.AuteurController;
-import biblio.mvc.observer.Observer;
+import biblio.mvcold.controller.ControllerAuteur;
+import biblio.mvcold.observer.Observer;
 
 import java.util.List;
 
 public abstract class AbstractViewAuteur implements Observer {
-    protected AuteurController auteurController;
+    protected ControllerAuteur controllerAuteur;
     protected List<Auteur> listAuteur;
 
-    public void setController(AuteurController auteurController) {
-        this.auteurController = auteurController;
+    public void setController(ControllerAuteur controllerAuteur) {
+        this.controllerAuteur = controllerAuteur;
     }
 
     public abstract void menu();

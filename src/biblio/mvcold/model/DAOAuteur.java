@@ -1,10 +1,10 @@
-package biblio.mvc.model;
+package biblio.mvcold.model;
 
 import biblio.metier.Auteur;
 import biblio.metier.Livre;
 import biblio.metier.Ouvrage;
 import biblio.metier.TypeLivre;
-import biblio.mvc.observer.Subject;
+import biblio.mvcold.observer.Subject;
 
 import java.util.List;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package biblio.mvc.view;
+package biblio.mvcold.view;
 
 import biblio.metier.Auteur;
 import biblio.metier.TypeLivre;
@@ -10,12 +10,12 @@ import java.util.Scanner;
 
 import static biblio.utilitaires.Utilitaire.*;
 
-public class AuteurViewConsole extends AbstractViewAuteur {
+public class AuteurViewConsole extends AbstractView<Auteur> {
     Scanner sc = new Scanner(System.in);
 
     @Override
     public void menu() {
-        update(auteurController.getAll());
+        update(controller.getAll());
 
         System.out.println();
 
@@ -60,14 +60,14 @@ public class AuteurViewConsole extends AbstractViewAuteur {
             }
         } while (true);
 
-        auteurController.add(a);
+        controller.add(a);
     }
 
     private void retirer() {
-        int choix = choixEltInt(listAuteur) - 1;
+        int choix = choixEltInt(list) - 1;
 
-        Auteur a = listAuteur.get(choix);
-        boolean ok = auteurController.remove(a);
+        Auteur a = list.get(choix);
+        boolean ok = controller.remove(a);
 
         if (ok) affMsg("Client effacé");
         else affMsg("Client non effacé");
@@ -84,7 +84,7 @@ public class AuteurViewConsole extends AbstractViewAuteur {
 
             Auteur rechAuteur = new Auteur(nom, prenom, nat);
 
-            Auteur a = auteurController.search(rechAuteur);
+            Auteur a = controller.search(rechAuteur);
             if (a == null) affMsg("Auteur inconnu");
             else {
                 affMsg(a.toString());
@@ -98,10 +98,10 @@ public class AuteurViewConsole extends AbstractViewAuteur {
     }
 
     public void modifier() {
-        System.out.println("\n" + listAuteur);
+        System.out.println("\n" + list);
 
-        int choix = choixEltInt(listAuteur);
-        Auteur a = listAuteur.get(choix - 1);
+        int choix = choixEltInt(list);
+        Auteur a = list.get(choix - 1);
 
         do {
             try {
@@ -119,7 +119,7 @@ public class AuteurViewConsole extends AbstractViewAuteur {
             }
         } while (true);
 
-        auteurController.update(a); /* Mise à jour de l'auteur choisi */
+        controller.update(a); /* Mise à jour de l'auteur choisi */
     }
 
     private void affMsg(String msg) {
@@ -155,12 +155,12 @@ public class AuteurViewConsole extends AbstractViewAuteur {
         System.out.println("Genre :");
         String genre = sc.nextLine();
 
-        affListe(new ArrayList(auteurController.listerOuvrages(a, genre)));
+        //affListe(new ArrayList(controller.listerOuvrages(a, genre)));
     }
 
 
     public void listerOuvrages(Auteur a) {
-        affList(new ArrayList(auteurController.listerOuvrages(a)));
+       // affList(new ArrayList(controllerAuteur.listerOuvrages(a)));
     }
 
 
@@ -170,7 +170,7 @@ public class AuteurViewConsole extends AbstractViewAuteur {
         int choix = choixListe(List.of(typeLivre));
         TypeLivre tl = typeLivre[choix - 1];
 
-        affList(new ArrayList(auteurController.listerLivre(a, tl)));
+        //affList(new ArrayList(controllerAuteur.listerLivre(a, tl)));
     }
 
     @Override

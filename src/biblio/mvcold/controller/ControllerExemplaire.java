@@ -1,19 +1,18 @@
-package biblio.mvc.controller;
+package biblio.mvcold.controller;
 
 import biblio.metier.Exemplaire;
-import biblio.mvc.model.DAOExemplaire;
-import biblio.mvc.view.AbstractViewExemplaire;
+import biblio.mvcold.model.DAOExemplaire;
+import biblio.mvcold.view.AbstractViewExemplaire;
 
 import java.util.List;
 
-public class ExemplaireController {
+public class ControllerExemplaire {
     protected DAOExemplaire modelExemplaire;
     protected AbstractViewExemplaire viewExemplaire;
 
-    public ExemplaireController(DAOExemplaire modelExemplaire, AbstractViewExemplaire viewExemplaire) {
+    public ControllerExemplaire(DAOExemplaire modelExemplaire, AbstractViewExemplaire viewExemplaire) {
         this.modelExemplaire = modelExemplaire;
         this.viewExemplaire = viewExemplaire;
-        this.viewExemplaire = setController(this);
     }
 
     public List<Exemplaire> getAll() {

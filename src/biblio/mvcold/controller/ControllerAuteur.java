@@ -1,20 +1,20 @@
-package biblio.mvc.controller;
+package biblio.mvcold.controller;
 
 import biblio.metier.Auteur;
 import biblio.metier.Livre;
 import biblio.metier.Ouvrage;
 import biblio.metier.TypeLivre;
-import biblio.mvc.model.DAOAuteur;
-import biblio.mvc.view.AbstractViewAuteur;
+import biblio.mvcold.model.DAOAuteur;
+import biblio.mvcold.view.AbstractViewAuteur;
 
 import java.util.List;
 import java.util.Set;
 
-public class AuteurController {
+public class ControllerAuteur {
     protected DAOAuteur modelAuteur;
     protected AbstractViewAuteur viewAuteur;
 
-    public AuteurController(DAOAuteur modelAuteur, AbstractViewAuteur viewAuteur) {
+    public ControllerAuteur(DAOAuteur modelAuteur, AbstractViewAuteur viewAuteur) {
         this.modelAuteur = modelAuteur;
         this.viewAuteur = viewAuteur;
         this.viewAuteur.setController(this); /* Méthode setController() -> Voir classe 'AbstractViewAuteur' */

@@ -1,4 +1,4 @@
-package biblio.mvc.model;
+package biblio.mvcold.model;
 
 import biblio.metier.Auteur;
 import biblio.metier.Livre;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class AuteurModel extends DAOAuteur {
+public class ModelAuteur extends DAO<Auteur> implements DAOSpecialAuteur {
     private List<Auteur> listAuteurDatas = new ArrayList<>();
 
     @Override

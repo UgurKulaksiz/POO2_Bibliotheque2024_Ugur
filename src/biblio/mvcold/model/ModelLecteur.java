@@ -1,11 +1,11 @@
-package biblio.mvc.model;
+package biblio.mvcold.model;
 
 import biblio.metier.Lecteur;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LecteurModel extends DAOLecteur{
+public class ModelLecteur extends DAO<Lecteur>{
     private List<Lecteur> listLecteurDatas = new ArrayList<>();
 
     @Override

@@ -1,4 +1,4 @@
-package biblio.mvc.view;
+package biblio.mvcold.view;
 
 import biblio.metier.Lecteur;
 
@@ -14,7 +14,7 @@ public class LecteurViewConsole extends AbstractViewLecteur{
 
     @Override
     public void menu() {
-        update(lecteurController.getAll());
+        update(controllerLecteur.getAll());
 
         System.out.println();
 
@@ -65,14 +65,14 @@ public class LecteurViewConsole extends AbstractViewLecteur{
             }
         } while (true);
 
-        lecteurController.add(l);
+        controllerLecteur.add(l);
     }
 
     private void retirerLecteur() {
         int choix = choixEltInt(listLecteur) - 1;
 
         Lecteur l = listLecteur.get(choix);
-        boolean ok = lecteurController.remove(l);
+        boolean ok = controllerLecteur.remove(l);
 
         if (ok) affMsg("Lecteur effacé");
         else affMsg("Lecteur non effacé");
@@ -95,7 +95,7 @@ public class LecteurViewConsole extends AbstractViewLecteur{
 
             Lecteur rechLecteur = new Lecteur(nom, prenom, dateNaissance, adresse, mail, tel);
 
-            Lecteur l = lecteurController.search(rechLecteur);
+            Lecteur l = controllerLecteur.search(rechLecteur);
             if (l == null) affMsg("Lecteur inconnu");
             else {
                 affMsg(l.toString());
@@ -135,7 +135,7 @@ public class LecteurViewConsole extends AbstractViewLecteur{
             }
         } while (true);
 
-        lecteurController.update(l); /* Mise à jour du lecteur choisi */
+        controllerLecteur.update(l); /* Mise à jour du lecteur choisi */
     }
 
     private void affMsg(String msg) {

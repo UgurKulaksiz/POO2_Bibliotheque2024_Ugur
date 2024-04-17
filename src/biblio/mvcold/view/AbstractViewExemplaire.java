@@ -1,17 +1,17 @@
-package biblio.mvc.view;
+package biblio.mvcold.view;
 
 import biblio.metier.Exemplaire;
-import biblio.mvc.controller.ExemplaireController;
-import biblio.mvc.observer.Observer;
+import biblio.mvcold.controller.ControllerExemplaire;
+import biblio.mvcold.observer.Observer;
 
 import java.util.List;
 
 public abstract class AbstractViewExemplaire implements Observer {
-    protected ExemplaireController exemplaireController;
+    protected ControllerExemplaire controllerExemplaire;
     protected List<Exemplaire> listExemplaire;
 
-    public void setController(ExemplaireController exemplaireController) {
-        this.exemplaireController = exemplaireController;
+    public void setController(ControllerExemplaire controllerExemplaire) {
+        this.controllerExemplaire = controllerExemplaire;
     }
 
 
