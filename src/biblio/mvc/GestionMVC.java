@@ -1,19 +1,21 @@
-package biblio.mvcold;
+package biblio.mvc;
 
 import biblio.metier.Auteur;
 import biblio.metier.Exemplaire;
 import biblio.metier.Lecteur;
 import biblio.metier.Rayon;
-import biblio.mvcold.controller.*;
+import biblio.mvcold.GestionMVCold;
+import biblio.mvcold.controller.Controller;
 import biblio.mvcold.model.*;
 import biblio.mvcold.view.*;
 import biblio.utilitaires.Utilitaire;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
-public class GestionMVCold {
+public class GestionMVC {
     private DAO<Auteur> modelAuteur;
     private AbstractView<Auteur> abViewAuteur;
     private Controller<Auteur> controllerAuteur;
@@ -21,6 +23,8 @@ public class GestionMVCold {
     private DAO<Exemplaire> modelExemplaire;
     private AbstractView<Exemplaire> abViewExemplaire;
     private Controller<Exemplaire> controllerExemplaire;
+
+    public static final HashMap<Exemplaire,Lecteur> LOCATION = new HashMap<>();
 
     private DAO<Lecteur> modelLecteur;
     private AbstractView<Lecteur> abViewLecteur;
@@ -35,6 +39,9 @@ public class GestionMVCold {
         abViewAuteur = new AuteurViewConsole();
         controllerAuteur = new Controller<>(modelAuteur, abViewAuteur);//création et injection de dépendance
 
+        //TODO créer les éléments relatifs aux autres classes
+        //TODO associer les vues entre elles pour exploiter leurs getAll()
+
         modelExemplaire = new ModelExemplaire();
         abViewExemplaire = new ExemplaireViewConsole();
         controllerExemplaire = new Controller<>(modelExemplaire, abViewExemplaire);
@@ -43,16 +50,14 @@ public class GestionMVCold {
         abViewLecteur = new LecteurViewConsole();
         controllerLecteur = new Controller<>(modelLecteur, abViewLecteur);
 
-        /*
         modelRayon = new ModelRayon();
         abViewRayon = new RayonViewConsole();
         controllerRayon = new Controller<>(modelRayon, abViewRayon);
-         */
 
         modelAuteur.addObserver(abViewAuteur);
         modelExemplaire.addObserver(abViewExemplaire);
         modelLecteur.addObserver(abViewLecteur);
-       /* modelRayon.addObserver(abViewRayon); */
+        modelRayon.addObserver(abViewRayon);
 
         try {
             populate();
@@ -76,7 +81,7 @@ public class GestionMVCold {
                     abViewLecteur.menu();
                     break;
                 case 4:
-                   /* abViewRayon.menu(); */
+                    abViewRayon.menu();
                     break;
                 case 5:
                     System.exit(0);
@@ -94,6 +99,8 @@ public class GestionMVCold {
         a = new Auteur("Kubrick", "Stanley", "GB");
         modelAuteur.getAll().add(a);
 
+        //TODO ajouter autres éléments, les associer entre eux et créer des locations
+
         Exemplaire e = new Exemplaire("a70", "peu utilisée");
         modelExemplaire.getAll().add(e);
 
@@ -103,17 +110,15 @@ public class GestionMVCold {
         Lecteur l = new Lecteur("Dupont", "Louis", LocalDate.of(2000, 5, 12), "La Louvière", "louis.dupont@gmail.com", "0485152535");
         modelLecteur.getAll().add(l);
 
-        /*
         Rayon r = new Rayon("r12", "aventure");
         modelRayon.add(r);
 
         r = new Rayon("a70", "documentaire");
         modelRayon.add(r);
-         */
     }
 
     public static void main(String[] args) {
-        GestionMVCold gMVC = new GestionMVCold();
+        GestionMVC gMVC = new GestionMVC();
         gMVC.gestion();
     }
 }

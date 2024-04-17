@@ -23,16 +23,16 @@ public class RayonViewConsole extends AbstractViewRayon {
 
             switch (ch) {
                 case 1:
-                    ajouter();
+                    ajouterRayon();
                     break;
                 case 2:
-                    retirer();
+                    retirerRayon();
                     break;
                 case 3:
-                    rechercher();
+                    rechercherRayon();
                     break;
                 case 4:
-                    modifier();
+                    modifierRayon();
                     break;
                 case 5:
                     return;
@@ -40,7 +40,7 @@ public class RayonViewConsole extends AbstractViewRayon {
         } while (true);
     }
 
-    public void ajouter() {
+    public void ajouterRayon() {
         Rayon r;
         do {
             try {
@@ -60,7 +60,7 @@ public class RayonViewConsole extends AbstractViewRayon {
         affMsg("Création du rayon : " + r);
     }
 
-    private void retirer() {
+    private void retirerRayon() {
         int nl = choixEltInt(listRayon) - 1;
         Rayon r = listRayon.get(nl);
         boolean ok = controllerRayon.remove(r);
@@ -69,7 +69,7 @@ public class RayonViewConsole extends AbstractViewRayon {
         else affMsg("Rayon non effacé");
     }
 
-    public void rechercher() {
+    public void rechercherRayon() {
         try {
             System.out.println("Code du rayon : ");
             String code = sc.nextLine();
@@ -88,7 +88,7 @@ public class RayonViewConsole extends AbstractViewRayon {
 
     }
 
-    public void modifier() {
+    public void modifierRayon() {
         int choix = choixEltInt(listRayon);
         Rayon r = listRayon.get(choix - 1);
         do {

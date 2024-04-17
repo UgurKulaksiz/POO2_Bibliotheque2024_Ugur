@@ -9,12 +9,12 @@ import java.util.Scanner;
 
 import static biblio.utilitaires.Utilitaire.*;
 
-public class LecteurViewConsole extends AbstractViewLecteur{
+public class LecteurViewConsole extends AbstractView<Lecteur>{
     Scanner sc = new Scanner(System.in);
 
     @Override
     public void menu() {
-        update(controllerLecteur.getAll());
+        update(controller.getAll());
 
         System.out.println();
 
@@ -65,14 +65,14 @@ public class LecteurViewConsole extends AbstractViewLecteur{
             }
         } while (true);
 
-        controllerLecteur.add(l);
+        controller.add(l);
     }
 
     private void retirerLecteur() {
-        int choix = choixEltInt(listLecteur) - 1;
+        int choix = choixEltInt(list) - 1;
 
-        Lecteur l = listLecteur.get(choix);
-        boolean ok = controllerLecteur.remove(l);
+        Lecteur l = list.get(choix);
+        boolean ok = controller.remove(l);
 
         if (ok) affMsg("Lecteur effacé");
         else affMsg("Lecteur non effacé");
@@ -95,7 +95,7 @@ public class LecteurViewConsole extends AbstractViewLecteur{
 
             Lecteur rechLecteur = new Lecteur(nom, prenom, dateNaissance, adresse, mail, tel);
 
-            Lecteur l = controllerLecteur.search(rechLecteur);
+            Lecteur l = controller.search(rechLecteur);
             if (l == null) affMsg("Lecteur inconnu");
             else {
                 affMsg(l.toString());
@@ -108,10 +108,10 @@ public class LecteurViewConsole extends AbstractViewLecteur{
     }
 
     public void modifierLecteur() {
-        System.out.println("\n" + listLecteur);
+        System.out.println("\n" + list);
 
-        int choix = choixEltInt(listLecteur);
-        Lecteur l = listLecteur.get(choix - 1);
+        int choix = choixEltInt(list);
+        Lecteur l = list.get(choix - 1);
 
         do {
             try {
@@ -135,7 +135,7 @@ public class LecteurViewConsole extends AbstractViewLecteur{
             }
         } while (true);
 
-        controllerLecteur.update(l); /* Mise à jour du lecteur choisi */
+        controller.update(l); /* Mise à jour du lecteur choisi */
     }
 
     private void affMsg(String msg) {

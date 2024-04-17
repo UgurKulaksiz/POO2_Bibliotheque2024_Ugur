@@ -9,12 +9,12 @@ import java.util.Scanner;
 import static biblio.utilitaires.Utilitaire.*;
 import static biblio.utilitaires.Utilitaire.affListe;
 
-public class ExemplaireViewConsole extends AbstractViewExemplaire{
+public class ExemplaireViewConsole extends AbstractView<Exemplaire>{
     Scanner sc = new Scanner(System.in);
 
     @Override
     public void menu() {
-        update(controllerExemplaire.getAll());
+        update(controller.getAll());
 
         System.out.println();
 
@@ -57,14 +57,14 @@ public class ExemplaireViewConsole extends AbstractViewExemplaire{
             }
         } while (true);
 
-        controllerExemplaire.add(ex);
+        controller.add(ex);
     }
 
     private void retirerExemplaire() {
-        int choix = choixEltInt(listExemplaire) - 1;
+        int choix = choixEltInt(list) - 1;
 
-        Exemplaire e = listExemplaire.get(choix);
-        boolean ok = controllerExemplaire.remove(e);
+        Exemplaire e = list.get(choix);
+        boolean ok = controller.remove(e);
 
         if (ok) affMsg("Exemplaire effacé");
         else affMsg("Exemplaire non effacé");
@@ -77,7 +77,7 @@ public class ExemplaireViewConsole extends AbstractViewExemplaire{
 
             Exemplaire rechExemplaire = new Exemplaire(matricule);
 
-            Exemplaire ex = controllerExemplaire.search(rechExemplaire);
+            Exemplaire ex = controller.search(rechExemplaire);
             if (ex == null) affMsg("Exemplaire inconnu");
             else {
                 affMsg(ex.toString());
@@ -90,10 +90,10 @@ public class ExemplaireViewConsole extends AbstractViewExemplaire{
     }
 
     public void modifierExemplaire() {
-        System.out.println("\n" + listExemplaire);
+        System.out.println("\n" + list);
 
-        int choix = choixEltInt(listExemplaire);
-        Exemplaire ex = listExemplaire.get(choix - 1);
+        int choix = choixEltInt(list);
+        Exemplaire ex = list.get(choix - 1);
 
         do {
             try {
@@ -109,7 +109,7 @@ public class ExemplaireViewConsole extends AbstractViewExemplaire{
             }
         } while (true);
 
-        controllerExemplaire.update(ex); /* Mise à jour de l'exemplaire choisi */
+        controller.update(ex); /* Mise à jour de l'exemplaire choisi */
     }
 
     private void affMsg(String msg) {
