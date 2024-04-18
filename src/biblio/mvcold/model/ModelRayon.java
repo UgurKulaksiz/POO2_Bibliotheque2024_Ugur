@@ -7,45 +7,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModelRayon extends DAO<Rayon> implements DAOSpecialRayon {
-    private List<Rayon> ldatas = new ArrayList<>();
+    private List<Rayon> listRayonDatas = new ArrayList<>();
 
 
     @Override
-    public Rayon add( Rayon elt) {
-        boolean present =ldatas.contains(elt);
+    public Rayon add(Rayon r) {
+        boolean present = listRayonDatas.contains(r);
+
         if (!present) {
-            ldatas.add(elt);
+            listRayonDatas.add(r);
             notifyObservers();
-            return elt;
+
+            return r;
         } else return null;
     }
 
     @Override
-    public boolean remove( Rayon elt) {
-        boolean ok = ldatas.remove(elt);
+    public boolean remove(Rayon r) {
+        boolean ok = listRayonDatas.remove(r);
         notifyObservers();
+
         return ok;
     }
 
     @Override
-    public Rayon update(Rayon elt) {
-        int p = ldatas.indexOf(elt);
+    public Rayon update(Rayon r) {
+        int p = listRayonDatas.indexOf(r);
+
         if (p < 0) return null;
-        ldatas.set(p, elt);
+        listRayonDatas.set(p, r);
         notifyObservers();
-        return elt;
+
+        return r;
     }
 
     @Override
-    public Rayon read(Rayon rech) {
-        int p = ldatas.indexOf(rech);
-        if(p<0) return null;
-        return ldatas.get(p);
+    public Rayon read(Rayon rechRayon) {
+        int p = listRayonDatas.indexOf(rechRayon);
+        if (p < 0) return null;
+
+        return listRayonDatas.get(p);
     }
 
     @Override
     public List<Rayon> getAll() {
-        return ldatas;
+        return listRayonDatas;
     }
 
 

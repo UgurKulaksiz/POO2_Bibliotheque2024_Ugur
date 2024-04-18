@@ -39,9 +39,6 @@ public class GestionMVC {
         abViewAuteur = new AuteurViewConsole();
         controllerAuteur = new Controller<>(modelAuteur, abViewAuteur);//création et injection de dépendance
 
-        //TODO créer les éléments relatifs aux autres classes
-        //TODO associer les vues entre elles pour exploiter leurs getAll()
-
         modelExemplaire = new ModelExemplaire();
         abViewExemplaire = new ExemplaireViewConsole();
         controllerExemplaire = new Controller<>(modelExemplaire, abViewExemplaire);
@@ -98,8 +95,6 @@ public class GestionMVC {
 
         a = new Auteur("Kubrick", "Stanley", "GB");
         modelAuteur.getAll().add(a);
-
-        //TODO ajouter autres éléments, les associer entre eux et créer des locations
 
         Exemplaire e = new Exemplaire("a70", "peu utilisée");
         modelExemplaire.getAll().add(e);

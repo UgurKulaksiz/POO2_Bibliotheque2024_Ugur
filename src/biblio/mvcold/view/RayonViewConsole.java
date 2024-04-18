@@ -2,6 +2,7 @@ package biblio.mvcold.view;
 
 import biblio.metier.Exemplaire;
 import biblio.metier.Rayon;
+import biblio.mvcold.controller.ControllerSpecialRayon;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,13 +10,13 @@ import java.util.Scanner;
 
 import static biblio.utilitaires.Utilitaire.*;
 
-public class RayonViewConsole extends AbstractViewRayon {
+public class RayonViewConsole extends AbstractView<Rayon> {
     Scanner sc = new Scanner(System.in);
 
 
     @Override
     public void menu() {
-        update(controllerRayon.getAll());
+        update(controller.getAll());
 
         List options = Arrays.asList("Ajouter rayon", "Retirer rayon", "Rechercher rayon", "Modifier rayon", "Fin");
         do {
@@ -56,14 +57,14 @@ public class RayonViewConsole extends AbstractViewRayon {
             }
         } while (true);
 
-        r = controllerRayon.add(r);
+        r = controller.add(r);
         affMsg("Création du rayon : " + r);
     }
 
     private void retirerRayon() {
-        int nl = choixEltInt(listRayon) - 1;
-        Rayon r = listRayon.get(nl);
-        boolean ok = controllerRayon.remove(r);
+        int nl = choixEltInt(list) - 1;
+        Rayon r = list.get(nl);
+        boolean ok = controller.remove(r);
 
         if (ok) affMsg("Rayon effacé");
         else affMsg("Rayon non effacé");
@@ -75,7 +76,7 @@ public class RayonViewConsole extends AbstractViewRayon {
             String code = sc.nextLine();
 
             Rayon rechRayon = new Rayon(code, "");
-            Rayon r = controllerRayon.search(rechRayon);
+            Rayon r = controller.search(rechRayon);
 
             if (r == null) affMsg("Rayon inconnu");
             else {
@@ -89,8 +90,8 @@ public class RayonViewConsole extends AbstractViewRayon {
     }
 
     public void modifierRayon() {
-        int choix = choixEltInt(listRayon);
-        Rayon r = listRayon.get(choix - 1);
+        int choix = choixEltInt(list);
+        Rayon r = list.get(choix - 1);
         do {
             try {
                 String genre = modifyIfNotBlank("Genre", r.getGenre());
@@ -101,7 +102,7 @@ public class RayonViewConsole extends AbstractViewRayon {
             }
         } while (true);
 
-        controllerRayon.update(r);
+        controller.update(r);
     }
 
     private void affMsg(String msg) {
@@ -127,7 +128,7 @@ public class RayonViewConsole extends AbstractViewRayon {
     }
 
     public void listerExemplaires(Rayon r) {
-        List<Exemplaire> listEx = controllerRayon.listerExemplaires(r);
+        List<Exemplaire> listEx = ((ControllerSpecialRayon)controller).listerExemplaires(r);
         affListe(listEx);
     }
 

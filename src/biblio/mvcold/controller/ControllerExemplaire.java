@@ -1,40 +1,41 @@
 package biblio.mvcold.controller;
 
 import biblio.metier.Exemplaire;
-import biblio.mvcold.model.DAOExemplaire;
-import biblio.mvcold.view.AbstractViewExemplaire;
+import biblio.metier.Lecteur;
+import biblio.metier.Mail;
+import biblio.mvcold.model.DAO;
+import biblio.mvcold.model.DAOSpecialExemplaire;
+import biblio.mvcold.view.AbstractView;
 
 import java.util.List;
 
-public class ControllerExemplaire {
-    protected DAOExemplaire modelExemplaire;
-    protected AbstractViewExemplaire viewExemplaire;
-
-    public ControllerExemplaire(DAOExemplaire modelExemplaire, AbstractViewExemplaire viewExemplaire) {
-        this.modelExemplaire = modelExemplaire;
-        this.viewExemplaire = viewExemplaire;
+public class ControllerExemplaire extends Controller<Exemplaire> implements ControllerSpecialExemplaire {
+    public ControllerExemplaire(DAO<Exemplaire> model, AbstractView<Exemplaire> view) {
+        super(model, view);
     }
 
-    public List<Exemplaire> getAll() {
-        List<Exemplaire> listExemplaire = modelExemplaire.getAll();
-        return listExemplaire;
-    }
-
-    public Exemplaire add(Exemplaire e) {
-        Exemplaire nExemplaire = modelExemplaire.add(e);
-        return nExemplaire;
+    @Override
+    public void modifierEtat(Exemplaire ex, String etat) {
+        ((DAOSpecialExemplaire) model).modifierEtat(ex, etat);
     }
 
 
-    public boolean remove(Exemplaire e) {
-        return modelExemplaire.remove(e);
+    @Override
+    public Lecteur LecteurActuel(Exemplaire ex) {
+        return ((DAOSpecialExemplaire) model).lecteurActuel(ex);
+
     }
 
-    public Exemplaire update(Exemplaire e) {
-        return modelExemplaire.update(e);
+
+    @Override
+    public void envoiMailLecteurActuel(Exemplaire ex, Mail m) {
+        ((DAOSpecialExemplaire) model).envoiMailLecteurActuel(ex, m);
     }
 
-    public Exemplaire search(Exemplaire rechEx) {
-        return modelExemplaire.read(rechEx);
+
+    @Override
+    public boolean enLocation(Exemplaire ex) {
+        return ((DAOSpecialExemplaire) model).enLocation(ex);
+
     }
 }

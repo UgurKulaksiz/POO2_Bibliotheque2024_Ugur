@@ -3,7 +3,6 @@ package biblio.mvcold.view;
 import biblio.metier.Auteur;
 import biblio.metier.TypeLivre;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;

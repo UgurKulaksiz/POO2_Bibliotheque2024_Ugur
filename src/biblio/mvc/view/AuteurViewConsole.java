@@ -12,8 +12,6 @@ import static biblio.utilitaires.Utilitaire.*;
 public class AuteurViewConsole extends AbstractView<Auteur> {
     Scanner sc = new Scanner(System.in);
 
-    //TODO ajouter une variable d'instance de type Vue<Ouvrage> ainsi que le setter correspondant
-
     @Override
     public void menu() {
         update(controller.getAll());
@@ -132,7 +130,6 @@ public class AuteurViewConsole extends AbstractView<Auteur> {
     public void special(Auteur a) {
 
         List options = Arrays.asList("Lister ouvrages", "Lister livres", "Lister par genre", "fin");
-        //TODO ajouter une option "ajouter des ouvrages" qui exploitera le getAll de la vue<Ouvrage>
 
         do {
             int choix = choixListe(options);

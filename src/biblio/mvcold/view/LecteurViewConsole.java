@@ -124,6 +124,8 @@ public class LecteurViewConsole extends AbstractView<Lecteur>{
 
                 l.setNom(nom);
                 l.setPrenom(prenom);
+
+                //TODO gérer autres valeurs
                 l.setDn(dn);
                 l.setAdresse(adresse);
                 l.setMail(mail);

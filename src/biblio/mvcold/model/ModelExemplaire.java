@@ -1,11 +1,13 @@
 package biblio.mvcold.model;
 
 import biblio.metier.Exemplaire;
+import biblio.metier.Lecteur;
+import biblio.metier.Mail;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModelExemplaire extends DAO<Exemplaire>{
+public class ModelExemplaire extends DAO<Exemplaire> implements DAOSpecialExemplaire {
     private List<Exemplaire> listExemplaireDatas = new ArrayList<>();
 
     @Override
@@ -29,7 +31,7 @@ public class ModelExemplaire extends DAO<Exemplaire>{
     }
 
     @Override
-        public Exemplaire update(Exemplaire e) {
+    public Exemplaire update(Exemplaire e) {
         int p = listExemplaireDatas.indexOf(e);
 
         if (p < 0) return null;
@@ -44,7 +46,7 @@ public class ModelExemplaire extends DAO<Exemplaire>{
     public Exemplaire read(Exemplaire rechEx) {
         int p = listExemplaireDatas.indexOf(rechEx);
 
-        if(p<0) return null;
+        if (p < 0) return null;
 
         return listExemplaireDatas.get(p);
     }
@@ -52,5 +54,26 @@ public class ModelExemplaire extends DAO<Exemplaire>{
     @Override
     public List<Exemplaire> getAll() {
         return listExemplaireDatas;
+    }
+
+    /* METHODES */
+    public void modifierEtat(Exemplaire ex, String etat) {
+        ex.setDescriptionEtat(etat);
+    }
+
+    @Override
+    public Lecteur lecteurActuel(Exemplaire ex) {
+        return ex.lecteurActuelExemplaire();
+    }
+
+
+    @Override
+    public void envoiMailLecteurActuel(Exemplaire ex, Mail m) {
+        ex.envoiMailLecteurActuelExemplaire(m);
+    }
+
+    @Override
+    public boolean enLocation(Exemplaire ex) {
+        return ex.enLocation();
     }
 }

@@ -4,55 +4,28 @@ import biblio.metier.Auteur;
 import biblio.metier.Livre;
 import biblio.metier.Ouvrage;
 import biblio.metier.TypeLivre;
-import biblio.mvcold.model.DAOAuteur;
-import biblio.mvcold.view.AbstractViewAuteur;
+import biblio.mvcold.model.DAO;
+import biblio.mvcold.model.DAOSpecialAuteur;
+import biblio.mvcold.view.AbstractView;
 
 import java.util.List;
 import java.util.Set;
 
-public class ControllerAuteur {
-    protected DAOAuteur modelAuteur;
-    protected AbstractViewAuteur viewAuteur;
-
-    public ControllerAuteur(DAOAuteur modelAuteur, AbstractViewAuteur viewAuteur) {
-        this.modelAuteur = modelAuteur;
-        this.viewAuteur = viewAuteur;
-        this.viewAuteur.setController(this); /* Méthode setController() -> Voir classe 'AbstractViewAuteur' */
-    }
-
-    public List<Auteur> getAll() {
-        List<Auteur> l = modelAuteur.getAll();
-        return l;
-    }
-
-    public Auteur add(Auteur a) {
-        Auteur nAuteur = modelAuteur.add(a);
-        return nAuteur;
-    }
-
-
-    public boolean remove(Auteur a) {
-        return modelAuteur.remove(a);
-    }
-
-    public Auteur update(Auteur a) {
-        return modelAuteur.update(a);
-    }
-
-    public Auteur search(Auteur rechA) {
-        return modelAuteur.read(rechA);
+public class ControllerAuteur extends Controller<Auteur> implements ControllerSpecialAuteur {
+    public ControllerAuteur(DAO<Auteur> model, AbstractView<Auteur> view) {
+        super(model, view);
     }
 
     public Set<Ouvrage> listerOuvrages(Auteur a) {
-        return modelAuteur.listerOuvrages(a);
+        return ((DAOSpecialAuteur) model).listerOuvrages(a);
     }
 
-    public List<Livre> listerLivre(Auteur a, TypeLivre typeLivre) {
+    public List<Livre> listerLivre(Auteur a, TypeLivre tl) {
 
-        return modelAuteur.listerLivre(a, typeLivre);
+        return ((DAOSpecialAuteur) model).listerLivre(a, tl);
     }
 
     public List<Ouvrage> listerOuvrages(Auteur a, String genre) {
-        return modelAuteur.listerOuvrages(a, genre);
+        return ((DAOSpecialAuteur) model).listerOuvrages(a, genre);
     }
 }
