@@ -59,6 +59,7 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
                 List<Ouvrage> listO = GestionMVCold.abViewOuvrage.getAll();
                 //TODO présenter les ouvrages par ordre de titre ==> classe anonyme
                 listO.sort(new OuvrageComparator());
+                System.out.println(listO);
 
                 int ch = choixListe(listO);
                 ex = new Exemplaire(matricule, descriptionEtat, listO.get(ch - 1));
@@ -67,6 +68,7 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
                 List<Rayon> listR = GestionMVCold.abViewRayon.getAll();
                 //TODO présenter les rayons par ordre de code ==> classe anonyme
                 listR.sort(new RayonComparator());
+                System.out.println(listR);
 
                 ch = choixListe(listR);
                 ex.setRayon(listR.get(ch - 1));
