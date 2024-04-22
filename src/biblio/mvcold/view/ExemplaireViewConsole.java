@@ -1,16 +1,16 @@
 package biblio.mvcold.view;
 
-import biblio.metier.Exemplaire;
-import biblio.metier.Mail;
-import biblio.metier.Ouvrage;
-import biblio.metier.Rayon;
+import biblio.metier.*;
 import biblio.mvcold.GestionMVCold;
 import biblio.mvcold.controller.ControllerSpecialExemplaire;
+import biblio.utilitaires.comparators.OuvrageComparator;
+import biblio.utilitaires.comparators.RayonComparator;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import static biblio.mvcold.GestionMVCold.LOCATIONS;
 import static biblio.utilitaires.Utilitaire.*;
 import static biblio.utilitaires.Utilitaire.affListe;
 
@@ -58,6 +58,7 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
                 System.out.println("Ouvrage : ");
                 List<Ouvrage> listO = GestionMVCold.abViewOuvrage.getAll();
                 //TODO présenter les ouvrages par ordre de titre ==> classe anonyme
+                listO.sort(new OuvrageComparator());
 
                 int ch = choixListe(listO);
                 ex = new Exemplaire(matricule, descriptionEtat, listO.get(ch - 1));
@@ -65,6 +66,7 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
                 System.out.println("Rayon");
                 List<Rayon> listR = GestionMVCold.abViewRayon.getAll();
                 //TODO présenter les rayons par ordre de code ==> classe anonyme
+                listR.sort(new RayonComparator());
 
                 ch = choixListe(listR);
                 ex.setRayon(listR.get(ch - 1));
@@ -168,12 +170,22 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
 
     }
 
-    private void rendre(Exemplaire a) {
-        GestionMVCold.LOCATIONS.remove(a);
+    private void rendre(Exemplaire e) {
+        LOCATIONS.remove(e);
     }
 
-    private void louer(Exemplaire a) {
+    private void louer(Exemplaire e) {
         //TODO chosir un lecteur et enregistrer la location dans LOCATIONS
+        System.out.println("Choix d'un lecteur : ");
+        List<Lecteur> listLecteur = GestionMVCold.abViewLecteur.getAll();
+        affList(listLecteur);
+
+        int choixLec = choixEltInt(listLecteur);
+
+        Lecteur lChoisi = listLecteur.get(choixLec - 1);
+
+        LOCATIONS.put(e, lChoisi);
+        System.out.println("Exemplaire loué avec succès au nom de " + lChoisi.getNom());
     }
 
 
