@@ -1,16 +1,12 @@
 package biblio.mvcold.view;
 
-import biblio.metier.Exemplaire;
-import biblio.metier.Ouvrage;
-import biblio.metier.TypeOuvrage;
+import biblio.metier.*;
 import biblio.mvcold.controller.ControllerSpecialOuvrage;
 import biblio.utilitaires.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
+import static biblio.mvcold.GestionMVCold.abViewAuteur;
 import static biblio.utilitaires.Utilitaire.*;
 
 public class OuvrageViewConsole extends AbstractView<Ouvrage> {
@@ -48,14 +44,38 @@ public class OuvrageViewConsole extends AbstractView<Ouvrage> {
 
         int choix = Utilitaire.choixListe(lto);
 
-        Ouvrage a = null;
+        Ouvrage o = null;
         List<OuvrageFactory> lof = new ArrayList<>(Arrays.asList(new LivreFactory(), new CDFactory(), new DVDFactory()));
-        a = lof.get(choix - 1).create();
+        o = lof.get(choix - 1).create();
+        // affecter un ou plusieurs auteurs
+        List<Auteur> listA = abViewAuteur.getAll();
 
-        //TODO affecter un ou plusieurs auteurs
-        //TODO trier les auteurs présentés par ordre de nom et prénom  ==>  classe anonyme
-        //TODO ne pas présenter les auteurs déjà enregistrés pour cet ouvrage
-        controller.add(a);
+        // trier les auteurs présentés par ordre de nom et prénom  ==>  classe anonyme
+        listA.sort(new Comparator<Auteur>() {
+            @Override
+            public int compare(Auteur a1, Auteur a2) {
+                if (a1.getNom().equals(a2.getNom())) return a1.getPrenom().compareTo(a2.getPrenom());
+                return a1.getNom().compareTo(a2.getNom());
+            }
+        });
+        // ne pas présenter les auteurs déjà enregistrés pour cet ouvrage
+        do {
+            Iterator<Auteur> listIteratorAuteur = listA.iterator();
+
+            while (listIteratorAuteur.hasNext()) {
+                Auteur a = listIteratorAuteur.next();
+                if (o.getListAuteur().contains(a)) listIteratorAuteur.remove();
+            }
+
+            int choix2 = choixListe(listA);
+
+            if (choix2 == 0) break;
+            o.addAuteur(listA.get(choix2 - 1));
+
+        } while (true);
+
+        //TODO utiliser Lambda
+        controller.add(o);
     }
 
     private void retirer() {
@@ -68,7 +88,41 @@ public class OuvrageViewConsole extends AbstractView<Ouvrage> {
     }
 
     public void rechercher() {
-        //TODO rechercher ouvrage en demandant type d'ouvrage, puis l'info unique relative à au type recherché
+        // rechercher ouvrage en demandant type d'ouvrage, puis l'info unique relative au type recherché
+        TypeOuvrage[] typeOuvrage = TypeOuvrage.values();
+        List<TypeOuvrage> listTypeOuvrage = Arrays.asList(typeOuvrage);
+
+        int choix = Utilitaire.choixListe(listTypeOuvrage);
+
+        Ouvrage o = null;
+        switch (choix) {
+            case 1:
+                System.out.print("ISBN : ");
+                String isbn = sc.nextLine();
+
+                o = new Livre("", 0, null, 0, "", "", isbn, 0, TypeLivre.ROMAN, "");
+                break;
+            case 2:
+                System.out.print("Code : ");
+                int codecd = lireInt();
+
+                o = new CD("", 0, null, 0, "", "", codecd, (byte) 0, null);
+                break;
+            case 3:
+                System.out.print("Code : ");
+                int codedvd = lireInt();
+
+                o = new DVD("", 0, null, 0, "", "", codedvd, null, (byte) 0);
+                break;
+        }
+
+        o = controller.search(o);
+
+        if (o != null) {
+            affMsg(o.toString());
+        } else {
+            affMsg("Ouvrage inconnu");
+        }
     }
 
 

@@ -7,6 +7,7 @@ import biblio.utilitaires.comparators.OuvrageComparator;
 import biblio.utilitaires.comparators.RayonComparator;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -57,18 +58,28 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
 
                 System.out.println("Ouvrage : ");
                 List<Ouvrage> listO = GestionMVCold.abViewOuvrage.getAll();
-                //TODO présenter les ouvrages par ordre de titre ==> classe anonyme
-                listO.sort(new OuvrageComparator());
-                System.out.println(listO);
+                // présenter les ouvrages par ordre de titre ==> classe anonyme
+                listO.sort(new Comparator<Ouvrage>() {
+                    @Override
+                    public int compare(Ouvrage o1, Ouvrage o2) {
+                        return o1.getTitre().compareTo(o2.getTitre());
+                    }
+                });
+                //TODO présenter les ouvrages par ordre de titre ==> lambda
 
                 int ch = choixListe(listO);
                 ex = new Exemplaire(matricule, descriptionEtat, listO.get(ch - 1));
 
                 System.out.println("Rayon");
                 List<Rayon> listR = GestionMVCold.abViewRayon.getAll();
-                //TODO présenter les rayons par ordre de code ==> classe anonyme
-                listR.sort(new RayonComparator());
-                System.out.println(listR);
+                // présenter les rayons par ordre de code ==> classe anonyme
+                listR.sort(new Comparator<Rayon>() {
+                    @Override
+                    public int compare(Rayon o1, Rayon o2) {
+                        return o1.getCodeRayon().compareTo(o2.getCodeRayon());
+                    }
+                });
+                //TODO présenter les rayons par ordre de code ==> lambda
 
                 ch = choixListe(listR);
                 ex.setRayon(listR.get(ch - 1));
@@ -103,6 +114,7 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
             if (ex == null) affMsg("Exemplaire inconnu");
             else {
                 affMsg(ex.toString());
+                special(ex);
             }
 
         } catch (Exception e) {
@@ -177,13 +189,17 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
     }
 
     private void louer(Exemplaire e) {
-        //TODO chosir un lecteur et enregistrer la location dans LOCATIONS
+        // chosir un lecteur et enregistrer la location dans LOCATIONS
         System.out.println("Choix d'un lecteur : ");
         List<Lecteur> listLecteur = GestionMVCold.abViewLecteur.getAll();
-        affList(listLecteur);
+        listLecteur.sort(new Comparator<Lecteur>() {
+            @Override
+            public int compare(Lecteur l1, Lecteur l2) {
+                return l1.getNumlecteur() - l2.getNumlecteur();
+            }
+        });
 
-        int choixLec = choixEltInt(listLecteur);
-
+        int choixLec = choixListe(listLecteur);
         Lecteur lChoisi = listLecteur.get(choixLec - 1);
 
         LOCATIONS.put(e, lChoisi);

@@ -39,7 +39,7 @@ public class GestionMVCold {
     public void gestion() {
         modelAuteur = new ModelAuteur();
         abViewAuteur = new AuteurViewConsole();
-        controllerAuteur = new Controller<>(modelAuteur, abViewAuteur);//création et injection de dépendance
+        controllerAuteur = new ControllerAuteur(modelAuteur, abViewAuteur);//création et injection de dépendance
         modelAuteur.addObserver(abViewAuteur);
 
         // créer les éléments relatifs aux autres classes
