@@ -2,6 +2,8 @@ package biblio.mvcold.view;
 
 import biblio.metier.Lecteur;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -9,16 +11,14 @@ import java.util.Scanner;
 
 import static biblio.utilitaires.Utilitaire.*;
 
-public class LecteurViewConsole extends AbstractView<Lecteur>{
+public class LecteurViewConsole extends AbstractView<Lecteur> {
     Scanner sc = new Scanner(System.in);
 
     @Override
     public void menu() {
         update(controller.getAll());
 
-        System.out.println();
-
-        List options = Arrays.asList("Ajouter lecteur", "Retirer lecteur", "Rechercher lecteur", "Modifier lecteur", "Fin");
+        List options = Arrays.asList("Ajouter lecteur", "Retirer lecteur", "Rechercher lecteur", "Modifier lecteur", "Ajouter les lecteurs", "Fin");
         do {
             int choix = choixListe(options);
 
@@ -36,6 +36,9 @@ public class LecteurViewConsole extends AbstractView<Lecteur>{
                     modifierLecteur();
                     break;
                 case 5:
+                    ajouterLecteurFichier();
+                    break;
+                case 6:
                     return;
             }
         } while (true);
@@ -79,21 +82,12 @@ public class LecteurViewConsole extends AbstractView<Lecteur>{
     }
 
     public void rechercherLecteur() {
+        System.out.println("\n" + list);
         try {
-            System.out.println("Nom : ");
-            String nom = sc.nextLine();
-            System.out.println("Prénom : ");
-            String prenom = sc.nextLine();
-            System.out.println("Date de naissance (DD MM YYYY): ");
-            LocalDate dateNaissance = lecDate();
-            System.out.println("Adresse : ");
-            String adresse = sc.nextLine();
-            System.out.println("E-mail : ");
-            String mail = sc.nextLine();
-            System.out.println("Téléphone : ");
-            String tel = sc.nextLine();
+            System.out.println("Numéro du lecteur : ");
+            int numLec = lireInt();
 
-            Lecteur rechLecteur = new Lecteur(nom, prenom, dateNaissance, adresse, mail, tel);
+            Lecteur rechLecteur = new Lecteur(numLec, "", "", null, "", "", "");
 
             Lecteur l = controller.search(rechLecteur);
             if (l == null) affMsg("Lecteur inconnu");
@@ -125,7 +119,7 @@ public class LecteurViewConsole extends AbstractView<Lecteur>{
                 l.setNom(nom);
                 l.setPrenom(prenom);
 
-                //TODO gérer autres valeurs
+                // gérer autres valeurs
                 //OK
                 l.setDn(dn);
                 l.setAdresse(adresse);
@@ -139,6 +133,32 @@ public class LecteurViewConsole extends AbstractView<Lecteur>{
         } while (true);
 
         controller.update(l); /* Mise à jour du lecteur choisi */
+    }
+
+    public void ajouterLecteurFichier() {
+        try {
+            // Ouvrir le fichier "nouveaux_lecteurs.txt" en lecture
+            Scanner fichier = new Scanner(new File("C:\\Ugur Kulaksiz Condorcet Mons Cours\\BAC 2 2023-2024 Ugur Kulaksiz\\Q2\\POO 2\\nouveaux_lecteurs.txt"));
+
+            while (fichier.hasNext()) {
+                // Lire chaque ligne du fichier
+                String line = fichier.nextLine();
+
+                // Séparer les informations du lecteur
+                String[] infoLecteur = line.split(", ");
+
+                // Créer un nouvel objet Lecteur
+                Lecteur nouveauLecteur = new Lecteur(infoLecteur[0], infoLecteur[1], LocalDate.parse(infoLecteur[2]), infoLecteur[3], infoLecteur[4], infoLecteur[5]);
+
+                // Ajouter le nouveau lecteur à la liste des lecteurs
+                controller.add(nouveauLecteur);
+            }
+
+            // Fermer le fichier (Scanner)
+            fichier.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Le fichier 'nouveaux_lecteurs.txt' n'a pas été trouvé.");
+        }
     }
 
     private void affMsg(String msg) {

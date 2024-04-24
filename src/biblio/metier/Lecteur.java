@@ -15,6 +15,16 @@ public class Lecteur {
     public Lecteur() {
     }
 
+    public Lecteur(int numlecteur, String nom, String prenom, LocalDate dn, String adresse, String mail, String tel) {
+        this.numlecteur = numlecteur;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dn = dn;
+        this.adresse = adresse;
+        this.mail = mail;
+        this.tel = tel;
+    }
+
     public Lecteur(String nom, String prenom, LocalDate dn, String adresse, String mail, String tel) {
         this.numlecteur = numact++; /* Incrémentation de numlecteur à partir de 1 */
         this.nom = nom;
@@ -104,7 +114,7 @@ public class Lecteur {
                 ", adresse='" + adresse + '\'' +
                 ", mail='" + mail + '\'' +
                 ", tel='" + tel + '\'' +
-                '}';
+                "}\n";
     }
 
     /* METHODES */

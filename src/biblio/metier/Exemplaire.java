@@ -1,7 +1,7 @@
 package biblio.metier;
 
 import java.util.*;
-import static biblio.gestion.GestionOld.LOCATIONS;
+import static biblio.mvcold.GestionMVCold.LOCATIONS;
 
 public class Exemplaire {
     private String matricule;
