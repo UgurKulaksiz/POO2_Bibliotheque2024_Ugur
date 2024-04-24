@@ -67,14 +67,21 @@ public class OuvrageViewConsole extends AbstractView<Ouvrage> {
                 if (o.getListAuteur().contains(a)) listIteratorAuteur.remove();
             }
 
-            int choix2 = choixListe(listA);
+            int choixAuteur = choixListe(listA);
 
-            if (choix2 == 0) break;
-            o.addAuteur(listA.get(choix2 - 1));
+            if (choixAuteur == 0) break;
+            o.addAuteur(listA.get(choixAuteur - 1));
 
         } while (true);
 
         //TODO utiliser Lambda
+        listA.sort((o1, o2) -> {
+            if (o1.getNom().equals(o2.getNom()))
+                return o1.getPrenom().compareTo(o2.getPrenom());
+
+            return o1.getNom().compareTo(o2.getNom());
+        });
+
         controller.add(o);
     }
 

@@ -59,13 +59,16 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
                 System.out.println("Ouvrage : ");
                 List<Ouvrage> listO = GestionMVCold.abViewOuvrage.getAll();
                 // présenter les ouvrages par ordre de titre ==> classe anonyme
+                /*
                 listO.sort(new Comparator<Ouvrage>() {
                     @Override
                     public int compare(Ouvrage o1, Ouvrage o2) {
                         return o1.getTitre().compareTo(o2.getTitre());
                     }
                 });
+                 */
                 //TODO présenter les ouvrages par ordre de titre ==> lambda
+                listO.sort((o1, o2) -> o1.getTitre().compareTo(o2.getTitre()));
 
                 int ch = choixListe(listO);
                 ex = new Exemplaire(matricule, descriptionEtat, listO.get(ch - 1));
@@ -73,13 +76,16 @@ public class ExemplaireViewConsole extends AbstractView<Exemplaire> {
                 System.out.println("Rayon");
                 List<Rayon> listR = GestionMVCold.abViewRayon.getAll();
                 // présenter les rayons par ordre de code ==> classe anonyme
+                /*
                 listR.sort(new Comparator<Rayon>() {
                     @Override
                     public int compare(Rayon o1, Rayon o2) {
                         return o1.getCodeRayon().compareTo(o2.getCodeRayon());
                     }
                 });
+                 */
                 //TODO présenter les rayons par ordre de code ==> lambda
+                listR.sort((o1, o2) -> o1.getCodeRayon().compareTo(o2.getCodeRayon()));
 
                 ch = choixListe(listR);
                 ex.setRayon(listR.get(ch - 1));
