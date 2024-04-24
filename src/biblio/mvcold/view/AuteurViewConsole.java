@@ -2,7 +2,9 @@ package biblio.mvcold.view;
 
 import biblio.metier.Auteur;
 import biblio.metier.TypeLivre;
+import biblio.mvcold.controller.ControllerSpecialAuteur;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -154,12 +156,12 @@ public class AuteurViewConsole extends AbstractView<Auteur> {
         System.out.println("Genre :");
         String genre = sc.nextLine();
 
-        //affListe(new ArrayList(controller.listerOuvrages(a, genre)));
+        affListe(new ArrayList(((ControllerSpecialAuteur)controller).listerOuvrages(a, genre)));
     }
 
 
     public void listerOuvrages(Auteur a) {
-       // affList(new ArrayList(controllerAuteur.listerOuvrages(a)));
+       affList(new ArrayList(((ControllerSpecialAuteur)controller).listerOuvrages(a)));
     }
 
 
@@ -169,7 +171,7 @@ public class AuteurViewConsole extends AbstractView<Auteur> {
         int choix = choixListe(List.of(typeLivre));
         TypeLivre tl = typeLivre[choix - 1];
 
-        //affList(new ArrayList(controllerAuteur.listerLivre(a, tl)));
+        affList(new ArrayList(((ControllerSpecialAuteur)controller).listerLivre(a, tl)));
     }
 
     @Override
